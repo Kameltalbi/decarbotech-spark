@@ -84,8 +84,8 @@
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 5px hsl(152 100% 45% / 0.3); }
-  50% { box-shadow: 0 0 20px hsl(152 100% 45% / 0.5); }
+  0%, 100% { box-shadow: 0 0 5px hsl(152 72% 34% / 0.2); }
+  50% { box-shadow: 0 0 20px hsl(152 72% 34% / 0.35); }
 }
 
 @keyframes progress-fill {
