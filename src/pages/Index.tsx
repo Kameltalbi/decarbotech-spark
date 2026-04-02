@@ -343,7 +343,7 @@ export default function Index() {
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li><a href="mailto:contact@decarbotech.com" className="hover:text-foreground transition-colors">contact@decarbotech.com</a></li>
               <li><a href="tel:+21655053505" className="hover:text-foreground transition-colors">+216 55 053 505</a></li>
-              <li>Paris, France</li>
+              <li>Tunis, Tunisie</li>
             </ul>
           </div>
         </div>
