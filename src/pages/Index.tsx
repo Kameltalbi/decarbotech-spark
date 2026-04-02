@@ -306,7 +306,7 @@ export default function Index() {
       <footer className="border-t border-border py-16 px-5 sm:px-8">
         <div className="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-12">
           <div>
-            <img src={logo} alt="DecarboTech" className="h-8 mb-4" />
+            <img src={logo} alt="DecarboTech" className="h-12 mb-4" />
             <p className="text-sm text-muted-foreground leading-relaxed">
               La technologie au service de la transition bas carbone. Paris, France.
             </p>
