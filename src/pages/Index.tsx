@@ -142,30 +142,35 @@ export default function Index() {
 
       {/* HERO */}
       <section className="pt-36 pb-24 px-5 sm:px-8 max-w-6xl mx-auto">
-        <div className="max-w-3xl">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold tracking-wide uppercase animate-pulse-glow">
-            Nouveau — DecarboBat RE2020
-          </span>
-          <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-[1.1] mt-8 text-foreground">
-            La technologie au service de la{" "}
-            <span className="gradient-text">décarbonation</span>
-          </h1>
-          <p className="text-muted-foreground text-lg sm:text-xl mt-6 leading-relaxed max-w-2xl">
-            DecarboTech développe des solutions SaaS pour mesurer, réduire et piloter l'impact environnemental des entreprises — carbone, eau et bâtiment.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 mt-10">
-            <a
-              href="#produits"
-              className="inline-flex items-center justify-center px-8 py-3.5 rounded-md bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity glow-sm"
-            >
-              Découvrir nos solutions
-            </a>
-            <a
-              href="#process"
-              className="inline-flex items-center justify-center px-8 py-3.5 rounded-md border border-border text-foreground font-semibold text-sm hover:bg-secondary transition-colors"
-            >
-              Notre méthodologie
-            </a>
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold tracking-wide uppercase animate-pulse-glow">
+              Nouveau — DecarboBat RE2020
+            </span>
+            <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-[1.1] mt-8 text-foreground">
+              La technologie au service de la{" "}
+              <span className="gradient-text">décarbonation</span>
+            </h1>
+            <p className="text-muted-foreground text-lg sm:text-xl mt-6 leading-relaxed max-w-2xl">
+              DecarboTech développe des solutions SaaS pour mesurer, réduire et piloter l'impact environnemental des entreprises — carbone, eau et bâtiment.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 mt-10">
+              <a
+                href="#produits"
+                className="inline-flex items-center justify-center px-8 py-3.5 rounded-md bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity glow-sm"
+              >
+                Découvrir nos solutions
+              </a>
+              <a
+                href="#process"
+                className="inline-flex items-center justify-center px-8 py-3.5 rounded-md border border-border text-foreground font-semibold text-sm hover:bg-secondary transition-colors"
+              >
+                Notre méthodologie
+              </a>
+            </div>
+          </div>
+          <div className="rounded-xl overflow-hidden shadow-lg">
+            <img src={heroImage} alt="Ville durable avec panneaux solaires et espaces verts" className="w-full h-auto object-cover" width={1280} height={720} />
           </div>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mt-20 pt-10 border-t border-border">
