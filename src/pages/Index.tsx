@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import logo from "@/assets/logo_decarbotech.png";
+import logoCarboscan from "@/assets/logo_carboscan.png";
+import logoHydroscan from "@/assets/logo_hydroscan.png";
+import logoDecarbobat from "@/assets/logo_decarbobat.png";
 
 const NAV_LINKS = [
   { label: "Solutions", href: "#produits" },
@@ -11,21 +14,21 @@ const NAV_LINKS = [
 const PRODUCTS = [
   {
     name: "CarbonScan",
-    emoji: "📊",
+    logo: logoCarboscan,
     description: "Mesurez et pilotez votre empreinte carbone d'entreprise en temps réel. Bilan carbone automatisé, reporting CSRD et plan de réduction personnalisé.",
     tags: ["Bilan Carbone", "CSRD", "Scope 1-2-3"],
     url: "https://carbonscan.io",
   },
   {
     name: "HydroScan",
-    emoji: "💧",
+    logo: logoHydroscan,
     description: "Évaluez et optimisez votre empreinte eau. Monitoring en continu, détection de fuites et conformité réglementaire sur l'ensemble de vos sites.",
     tags: ["Empreinte Eau", "Monitoring", "Conformité"],
     url: "https://hydroscan.io",
   },
   {
     name: "DecarboBat",
-    emoji: "🏗️",
+    logo: logoDecarbobat,
     description: "Accompagnez la décarbonation du secteur du bâtiment. Simulation énergétique, conformité RE2020 et suivi des rénovations bas carbone.",
     tags: ["Bâtiment", "RE2020", "Rénovation"],
     url: "https://decarbobat.io",
@@ -192,7 +195,7 @@ export default function Index() {
                 className="group block rounded-lg border border-border bg-background p-8 card-hover"
               >
                 <div className="flex items-start justify-between">
-                  <div className="text-3xl">{p.emoji}</div>
+                  <img src={p.logo} alt={p.name} className="h-10 object-contain" loading="lazy" />
                   <svg className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 17L17 7M17 7H7M17 7v10" />
                   </svg>
