@@ -62,11 +62,11 @@
 
 @layer utilities {
   .glass-nav {
-    @apply bg-background/70 backdrop-blur-xl border-b border-border/50;
+    @apply bg-background/80 backdrop-blur-xl border-b border-border/60;
   }
 
   .card-hover {
-    @apply transition-all duration-300 hover:border-primary/40 hover:-translate-y-1 hover:shadow-[0_8px_30px_-12px_hsl(152,100%,45%,0.15)];
+    @apply transition-all duration-300 hover:border-primary/40 hover:-translate-y-1 hover:shadow-[0_8px_30px_-12px_hsl(152,72%,34%,0.18)];
   }
 
   .gradient-text {
