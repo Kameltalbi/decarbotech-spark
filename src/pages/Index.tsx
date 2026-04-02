@@ -311,7 +311,7 @@ export default function Index() {
           <div>
             <img src={logo} alt="DecarboTech" className="h-12 mb-4" />
             <p className="text-sm text-muted-foreground leading-relaxed">
-              La technologie au service de la transition bas carbone. Paris, France.
+              La technologie au service de la transition bas carbone. Tunis, Tunisie.
             </p>
           </div>
           <div>
@@ -343,7 +343,7 @@ export default function Index() {
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li><a href="mailto:contact@decarbotech.com" className="hover:text-foreground transition-colors">contact@decarbotech.com</a></li>
               <li><a href="tel:+21655053505" className="hover:text-foreground transition-colors">+216 55 053 505</a></li>
-              <li>Paris, France</li>
+              <li>Tunis, Tunisie</li>
             </ul>
           </div>
         </div>
