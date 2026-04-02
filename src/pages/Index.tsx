@@ -97,7 +97,7 @@ export default function Index() {
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "glass-nav shadow-sm" : "bg-transparent"}`}>
         <div className="max-w-6xl mx-auto px-5 sm:px-8 flex items-center justify-between h-[72px]">
           <a href="#" className="flex items-center">
-            <img src={logo} alt="DecarboTech" className="h-10" />
+            <img src={logo} alt="DecarboTech" className="h-14" />
           </a>
           <div className="hidden md:flex items-center gap-10">
             {NAV_LINKS.map((l) => (
