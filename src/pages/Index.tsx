@@ -4,6 +4,8 @@ import logoCarboscan from "@/assets/logo_carboscan.png";
 import logoHydroscan from "@/assets/logo_hydroscan.png";
 import logoDecarbobat from "@/assets/logo_decarbobat.png";
 
+import heroImage from "@/assets/hero_decarbonation.jpg";
+
 const NAV_LINKS = [
   { label: "Solutions", href: "#produits" },
   { label: "Avantages", href: "#pourquoi" },
