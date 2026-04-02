@@ -311,7 +311,7 @@ export default function Index() {
           <div>
             <img src={logo} alt="DecarboTech" className="h-12 mb-4" />
             <p className="text-sm text-muted-foreground leading-relaxed">
-              La technologie au service de la transition bas carbone. Paris, France.
+              La technologie au service de la transition bas carbone. Tunis, Tunisie.
             </p>
           </div>
           <div>
