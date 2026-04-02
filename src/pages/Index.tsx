@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import logo from "@/assets/logo_decarbotech.png";
 
 const NAV_LINKS = [
   { label: "Solutions", href: "#produits" },
@@ -9,32 +10,25 @@ const NAV_LINKS = [
 
 const PRODUCTS = [
   {
-    name: "CarbonTrack",
+    name: "CarbonScan",
     emoji: "📊",
-    description: "Mesurez votre empreinte carbone en temps réel avec des dashboards intelligents et des rapports automatisés.",
-    tags: ["Mesure", "Dashboard", "API"],
-    url: "https://decarbotech.com/carbontrack",
+    description: "Mesurez et pilotez votre empreinte carbone d'entreprise en temps réel. Bilan carbone automatisé, reporting CSRD et plan de réduction personnalisé.",
+    tags: ["Bilan Carbone", "CSRD", "Scope 1-2-3"],
+    url: "https://carbonscan.io",
   },
   {
-    name: "GreenSupply",
-    emoji: "🌿",
-    description: "Analysez et optimisez l'impact environnemental de votre chaîne d'approvisionnement de bout en bout.",
-    tags: ["Supply Chain", "Audit", "Score ESG"],
-    url: "https://decarbotech.com/greensupply",
+    name: "HydroScan",
+    emoji: "💧",
+    description: "Évaluez et optimisez votre empreinte eau. Monitoring en continu, détection de fuites et conformité réglementaire sur l'ensemble de vos sites.",
+    tags: ["Empreinte Eau", "Monitoring", "Conformité"],
+    url: "https://hydroscan.io",
   },
   {
-    name: "OffsetHub",
-    emoji: "🌍",
-    description: "Accédez à un marketplace de crédits carbone vérifiés et compensez vos émissions résiduelles.",
-    tags: ["Compensation", "Marketplace", "Certifié"],
-    url: "https://decarbotech.com/offsethub",
-  },
-  {
-    name: "ReportIQ",
-    emoji: "📄",
-    description: "Générez automatiquement vos rapports CSRD, taxonomie verte et bilan carbone réglementaire.",
-    tags: ["CSRD", "Réglementation", "Auto-génération"],
-    url: "https://decarbotech.com/reportiq",
+    name: "DecarboBat",
+    emoji: "🏗️",
+    description: "Accompagnez la décarbonation du secteur du bâtiment. Simulation énergétique, conformité RE2020 et suivi des rénovations bas carbone.",
+    tags: ["Bâtiment", "RE2020", "Rénovation"],
+    url: "https://decarbobat.io",
   },
 ];
 
@@ -102,8 +96,8 @@ export default function Index() {
       {/* NAV */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "glass-nav shadow-sm" : "bg-transparent"}`}>
         <div className="max-w-6xl mx-auto px-5 sm:px-8 flex items-center justify-between h-[72px]">
-          <a href="#" className="font-heading font-bold text-2xl tracking-tight text-foreground">
-            Decarbotech
+          <a href="#" className="flex items-center">
+            <img src={logo} alt="DecarboTech" className="h-10" />
           </a>
           <div className="hidden md:flex items-center gap-10">
             {NAV_LINKS.map((l) => (
@@ -145,14 +139,14 @@ export default function Index() {
       <section className="pt-36 pb-24 px-5 sm:px-8 max-w-6xl mx-auto">
         <div className="max-w-3xl">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold tracking-wide uppercase animate-pulse-glow">
-            Nouveau — ReportIQ CSRD
+            Nouveau — DecarboBat RE2020
           </span>
           <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-[1.1] mt-8 text-foreground">
             La technologie au service de la{" "}
             <span className="gradient-text">décarbonation</span>
           </h1>
           <p className="text-muted-foreground text-lg sm:text-xl mt-6 leading-relaxed max-w-2xl">
-            Decarbotech accompagne les entreprises dans la mesure, la réduction et la compensation de leur empreinte carbone avec des outils fiables et certifiés.
+            DecarboTech développe des solutions SaaS pour mesurer, réduire et piloter l'impact environnemental des entreprises — carbone, eau et bâtiment.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 mt-10">
             <a
@@ -183,12 +177,12 @@ export default function Index() {
       <section id="produits" className="py-24 px-5 sm:px-8 bg-card">
         <div className="max-w-6xl mx-auto">
           <div className="max-w-xl mb-16">
-            <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Solutions</p>
+            <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Nos Applications</p>
             <h2 className="font-heading font-bold text-3xl sm:text-4xl text-card-foreground">
-              Une suite complète pour votre stratégie carbone
+              Trois plateformes pour votre stratégie environnementale
             </h2>
           </div>
-          <div className="grid sm:grid-cols-2 gap-6">
+          <div className="grid sm:grid-cols-3 gap-6">
             {PRODUCTS.map((p) => (
               <a
                 key={p.name}
@@ -286,7 +280,7 @@ export default function Index() {
       <section id="contact" className="py-24 px-5 sm:px-8">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="font-heading font-bold text-3xl sm:text-4xl text-foreground">
-            Prêt à accélérer votre transition carbone ?
+            Prêt à accélérer votre transition environnementale ?
           </h2>
           <p className="text-muted-foreground mt-5 text-lg max-w-xl mx-auto leading-relaxed">
             Prenez rendez-vous avec notre équipe pour une démonstration personnalisée de nos solutions.
@@ -312,13 +306,13 @@ export default function Index() {
       <footer className="border-t border-border py-16 px-5 sm:px-8">
         <div className="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-12">
           <div>
-            <span className="font-heading font-bold text-xl text-foreground">Decarbotech</span>
-            <p className="text-sm text-muted-foreground mt-4 leading-relaxed">
+            <img src={logo} alt="DecarboTech" className="h-8 mb-4" />
+            <p className="text-sm text-muted-foreground leading-relaxed">
               La technologie au service de la transition bas carbone. Paris, France.
             </p>
           </div>
           <div>
-            <h4 className="font-heading font-bold text-sm text-foreground mb-4">Solutions</h4>
+            <h4 className="font-heading font-bold text-sm text-foreground mb-4">Applications</h4>
             <ul className="space-y-3">
               {PRODUCTS.map((p) => (
                 <li key={p.name}>
@@ -351,7 +345,7 @@ export default function Index() {
           </div>
         </div>
         <div className="max-w-6xl mx-auto mt-12 pt-8 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-muted-foreground">© 2026 Decarbotech. Tous droits réservés.</p>
+          <p className="text-xs text-muted-foreground">© 2026 DecarboTech. Tous droits réservés.</p>
         </div>
       </footer>
     </div>

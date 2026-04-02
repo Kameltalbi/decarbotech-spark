@@ -5,43 +5,43 @@
 @layer base {
   :root {
     --background: 40 30% 97%;
-    --foreground: 160 30% 10%;
+    --foreground: 160 40% 8%;
 
     --card: 40 25% 99%;
-    --card-foreground: 160 30% 10%;
+    --card-foreground: 160 40% 8%;
 
     --popover: 40 25% 99%;
-    --popover-foreground: 160 30% 10%;
+    --popover-foreground: 160 40% 8%;
 
-    --primary: 160 45% 22%;
-    --primary-foreground: 40 30% 97%;
+    --primary: 155 55% 23%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 40 20% 93%;
-    --secondary-foreground: 160 25% 18%;
+    --secondary: 155 20% 93%;
+    --secondary-foreground: 155 40% 18%;
 
     --muted: 40 15% 93%;
-    --muted-foreground: 160 10% 45%;
+    --muted-foreground: 155 12% 42%;
 
-    --accent: 155 50% 30%;
-    --accent-foreground: 40 30% 97%;
+    --accent: 155 60% 42%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 50%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 40 15% 87%;
     --input: 40 15% 87%;
-    --ring: 160 45% 22%;
+    --ring: 155 55% 23%;
 
     --radius: 0.5rem;
 
     --sidebar-background: 40 20% 95%;
-    --sidebar-foreground: 160 30% 10%;
-    --sidebar-primary: 160 45% 22%;
-    --sidebar-primary-foreground: 40 30% 97%;
+    --sidebar-foreground: 160 40% 8%;
+    --sidebar-primary: 155 55% 23%;
+    --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 40 20% 93%;
-    --sidebar-accent-foreground: 160 30% 10%;
+    --sidebar-accent-foreground: 160 40% 8%;
     --sidebar-border: 40 15% 87%;
-    --sidebar-ring: 160 45% 22%;
+    --sidebar-ring: 155 55% 23%;
   }
 }
 
@@ -70,17 +70,17 @@
   }
 
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-[hsl(160,45%,22%)] to-[hsl(155,50%,38%)];
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[hsl(155,55%,23%)] to-[hsl(155,60%,42%)];
   }
 
   .glow-sm {
-    box-shadow: 0 4px 14px -3px hsl(160 45% 22% / 0.2);
+    box-shadow: 0 4px 14px -3px hsl(155 55% 23% / 0.2);
   }
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 5px hsl(160 45% 22% / 0.15); }
-  50% { box-shadow: 0 0 18px hsl(160 45% 22% / 0.25); }
+  0%, 100% { box-shadow: 0 0 5px hsl(155 55% 23% / 0.15); }
+  50% { box-shadow: 0 0 18px hsl(155 55% 23% / 0.25); }
 }
 
 .animate-pulse-glow {
