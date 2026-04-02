@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 52" fill="none">
+  <!-- Icon background -->
+  <rect x="0" y="0" width="52" height="52" rx="11" fill="#2D6A4F"/>
+  <!-- Leaf icon (Lucide-style, white) -->
+  <path d="M26 14C26 14 16 18 16 27C16 32.5 19.5 37 25 38.5V43H27V38.5C32.5 37 36 32.5 36 27C36 18 26 14 26 14Z" fill="white" opacity="0.95"/>
+  <path d="M26 22V43" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <!-- WasteScan text -->
+  <text x="64" y="34" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="20" fill="#1B4332" letter-spacing="-0.2">WasteScan</text>
+</svg>
