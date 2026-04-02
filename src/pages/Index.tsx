@@ -195,7 +195,7 @@ export default function Index() {
                 className="group block rounded-lg border border-border bg-background p-8 card-hover"
               >
                 <div className="flex items-start justify-between">
-                  <div className="text-3xl">{p.emoji}</div>
+                  <img src={p.logo} alt={p.name} className="h-10 object-contain" loading="lazy" />
                   <svg className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 17L17 7M17 7H7M17 7v10" />
                   </svg>
