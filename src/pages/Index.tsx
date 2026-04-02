@@ -296,10 +296,10 @@ export default function Index() {
               contact@decarbotech.com
             </a>
             <a
-              href="tel:+33140000000"
+              href="tel:+21655053505"
               className="inline-flex items-center justify-center px-8 py-4 rounded-md border border-border text-foreground font-semibold text-sm hover:bg-secondary transition-colors"
             >
-              +33 1 40 00 00 00
+              +216 55 053 505
             </a>
           </div>
         </div>
@@ -342,7 +342,7 @@ export default function Index() {
             <h4 className="font-heading font-bold text-sm text-foreground mb-4">Contact</h4>
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li><a href="mailto:contact@decarbotech.com" className="hover:text-foreground transition-colors">contact@decarbotech.com</a></li>
-              <li><a href="tel:+33140000000" className="hover:text-foreground transition-colors">+33 1 40 00 00 00</a></li>
+              <li><a href="tel:+21655053505" className="hover:text-foreground transition-colors">+216 55 053 505</a></li>
               <li>Paris, France</li>
             </ul>
           </div>
