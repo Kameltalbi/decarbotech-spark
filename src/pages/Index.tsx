@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import logo from "@/assets/logo_decarbotech.png";
+import logoCarboscan from "@/assets/logo_carboscan.png";
+import logoHydroscan from "@/assets/logo_hydroscan.png";
+import logoDecarbobat from "@/assets/logo_decarbobat.png";
 
 const NAV_LINKS = [
   { label: "Solutions", href: "#produits" },
