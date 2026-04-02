@@ -296,10 +296,10 @@ export default function Index() {
               contact@decarbotech.com
             </a>
             <a
-              href="tel:+33140000000"
+              href="tel:+21655053505"
               className="inline-flex items-center justify-center px-8 py-4 rounded-md border border-border text-foreground font-semibold text-sm hover:bg-secondary transition-colors"
             >
-              +33 1 40 00 00 00
+              +216 55 053 505
             </a>
           </div>
         </div>
