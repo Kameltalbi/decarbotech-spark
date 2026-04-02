@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 
 const NAV_LINKS = [
-  { label: "Produits", href: "#produits" },
-  { label: "Pourquoi nous", href: "#pourquoi" },
-  { label: "Process", href: "#process" },
+  { label: "Solutions", href: "#produits" },
+  { label: "Avantages", href: "#pourquoi" },
+  { label: "Méthodologie", href: "#process" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -14,7 +14,6 @@ const PRODUCTS = [
     description: "Mesurez votre empreinte carbone en temps réel avec des dashboards intelligents et des rapports automatisés.",
     tags: ["Mesure", "Dashboard", "API"],
     url: "https://decarbotech.com/carbontrack",
-    accent: "152 100% 45%",
   },
   {
     name: "GreenSupply",
@@ -22,7 +21,6 @@ const PRODUCTS = [
     description: "Analysez et optimisez l'impact environnemental de votre chaîne d'approvisionnement de bout en bout.",
     tags: ["Supply Chain", "Audit", "Score ESG"],
     url: "https://decarbotech.com/greensupply",
-    accent: "180 70% 45%",
   },
   {
     name: "OffsetHub",
@@ -30,7 +28,6 @@ const PRODUCTS = [
     description: "Accédez à un marketplace de crédits carbone vérifiés et compensez vos émissions résiduelles.",
     tags: ["Compensation", "Marketplace", "Certifié"],
     url: "https://decarbotech.com/offsethub",
-    accent: "45 90% 55%",
   },
   {
     name: "ReportIQ",
@@ -38,15 +35,14 @@ const PRODUCTS = [
     description: "Générez automatiquement vos rapports CSRD, taxonomie verte et bilan carbone réglementaire.",
     tags: ["CSRD", "Réglementation", "Auto-génération"],
     url: "https://decarbotech.com/reportiq",
-    accent: "270 60% 60%",
   },
 ];
 
 const FEATURES = [
-  { icon: "⚡", title: "Temps réel", desc: "Données mises à jour en continu depuis vos systèmes existants." },
-  { icon: "🔒", title: "Sécurisé", desc: "Chiffrement de bout en bout, hébergement souverain européen." },
-  { icon: "🔗", title: "Intégrable", desc: "API REST et connecteurs ERP, CRM, comptabilité prêts à l'emploi." },
-  { icon: "🏆", title: "Certifié", desc: "Méthodologie alignée GHG Protocol, SBTi et taxonomie EU." },
+  { icon: "⚡", title: "Données temps réel", desc: "Synchronisation continue avec vos systèmes existants pour des mesures toujours à jour." },
+  { icon: "🔒", title: "Sécurité souveraine", desc: "Hébergement européen, chiffrement de bout en bout, conformité RGPD." },
+  { icon: "🔗", title: "Intégration native", desc: "API REST et connecteurs ERP, CRM, comptabilité prêts à l'emploi." },
+  { icon: "🏆", title: "Standards reconnus", desc: "Méthodologie alignée GHG Protocol, SBTi et taxonomie européenne." },
 ];
 
 const STATS = [
@@ -57,10 +53,10 @@ const STATS = [
 ];
 
 const STEPS = [
-  { num: "01", title: "Connectez", desc: "Intégrez vos sources de données en quelques clics via nos connecteurs." },
+  { num: "01", title: "Connectez", desc: "Intégrez vos sources de données en quelques clics via nos connecteurs certifiés." },
   { num: "02", title: "Mesurez", desc: "Notre moteur calcule automatiquement vos émissions scope 1, 2 et 3." },
   { num: "03", title: "Réduisez", desc: "Recevez des recommandations personnalisées pour diminuer votre impact." },
-  { num: "04", title: "Reportez", desc: "Générez des rapports conformes et communiquez vos progrès." },
+  { num: "04", title: "Reportez", desc: "Générez des rapports conformes et communiquez vos progrès aux parties prenantes." },
 ];
 
 function useScrollVisible(threshold = 0.2) {
@@ -81,10 +77,10 @@ function useScrollVisible(threshold = 0.2) {
 
 function ProgressBar({ pct, visible }: { pct: number; visible: boolean }) {
   return (
-    <div className="h-2 rounded-full bg-secondary overflow-hidden">
+    <div className="h-1.5 rounded-full bg-secondary overflow-hidden">
       <div
-        className="h-full rounded-full bg-primary transition-all duration-1000 ease-out"
-        style={{ width: visible ? `${pct}%` : "0%", "--target-width": `${pct}%` } as React.CSSProperties}
+        className="h-full rounded-full bg-primary transition-all duration-[1.2s] ease-out"
+        style={{ width: visible ? `${pct}%` : "0%" }}
       />
     </div>
   );
@@ -104,204 +100,207 @@ export default function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground font-body">
       {/* NAV */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "glass-nav shadow-lg" : "bg-transparent"}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-          <a href="#" className="font-heading font-bold text-xl tracking-tight">
-            <span className="text-primary">Decarbo</span>
-            <span className="text-foreground">tech</span>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "glass-nav shadow-sm" : "bg-transparent"}`}>
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 flex items-center justify-between h-[72px]">
+          <a href="#" className="font-heading font-bold text-2xl tracking-tight text-foreground">
+            Decarbotech
           </a>
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-10">
             {NAV_LINKS.map((l) => (
-              <a key={l.href} href={l.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <a key={l.href} href={l.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">
                 {l.label}
               </a>
             ))}
             <a
               href="#contact"
-              className="px-5 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-opacity"
+              className="px-6 py-2.5 rounded-md bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-opacity"
             >
-              Nous contacter
+              Prendre rendez-vous
             </a>
           </div>
           <button className="md:hidden text-foreground" onClick={() => setMobileMenu(!mobileMenu)} aria-label="Menu">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {mobileMenu
-                ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
+                : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
               }
             </svg>
           </button>
         </div>
         {mobileMenu && (
-          <div className="md:hidden glass-nav border-t border-border/50 px-4 pb-4 space-y-3">
+          <div className="md:hidden bg-card border-t border-border px-5 pb-5 space-y-1">
             {NAV_LINKS.map((l) => (
-              <a key={l.href} href={l.href} onClick={() => setMobileMenu(false)} className="block py-2 text-sm text-muted-foreground hover:text-foreground">
+              <a key={l.href} href={l.href} onClick={() => setMobileMenu(false)} className="block py-3 text-sm text-muted-foreground hover:text-foreground font-medium">
                 {l.label}
               </a>
             ))}
-            <a href="#contact" onClick={() => setMobileMenu(false)} className="block py-2 text-sm font-semibold text-primary">
-              Nous contacter
+            <a href="#contact" onClick={() => setMobileMenu(false)} className="block py-3 text-sm font-semibold text-primary">
+              Prendre rendez-vous
             </a>
           </div>
         )}
       </nav>
 
       {/* HERO */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="flex flex-col items-center text-center space-y-8">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-medium animate-pulse-glow">
-            🚀 Nouveau — ReportIQ CSRD disponible
+      <section className="pt-36 pb-24 px-5 sm:px-8 max-w-6xl mx-auto">
+        <div className="max-w-3xl">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold tracking-wide uppercase animate-pulse-glow">
+            Nouveau — ReportIQ CSRD
           </span>
-          <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-7xl leading-tight max-w-4xl">
-            Décarbonez votre entreprise{" "}
-            <span className="gradient-text">intelligemment</span>
+          <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-[1.1] mt-8 text-foreground">
+            La technologie au service de la{" "}
+            <span className="gradient-text">décarbonation</span>
           </h1>
-          <p className="text-muted-foreground text-lg sm:text-xl max-w-2xl leading-relaxed">
-            Decarbotech fournit aux entreprises les outils technologiques pour mesurer, réduire et compenser leur empreinte carbone — simplement et efficacement.
+          <p className="text-muted-foreground text-lg sm:text-xl mt-6 leading-relaxed max-w-2xl">
+            Decarbotech accompagne les entreprises dans la mesure, la réduction et la compensation de leur empreinte carbone avec des outils fiables et certifiés.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row gap-4 mt-10">
             <a
               href="#produits"
-              className="px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity glow-sm"
+              className="inline-flex items-center justify-center px-8 py-3.5 rounded-md bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity glow-sm"
             >
               Découvrir nos solutions
             </a>
             <a
               href="#process"
-              className="px-8 py-3.5 rounded-lg border border-border text-foreground font-semibold text-sm hover:bg-secondary transition-colors"
+              className="inline-flex items-center justify-center px-8 py-3.5 rounded-md border border-border text-foreground font-semibold text-sm hover:bg-secondary transition-colors"
             >
-              Comment ça marche
+              Notre méthodologie
             </a>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 pt-12 w-full max-w-3xl">
-            {STATS.map((s) => (
-              <div key={s.label} className="text-center">
-                <div className="font-heading font-bold text-2xl sm:text-3xl text-foreground">{s.value}</div>
-                <div className="text-xs text-muted-foreground mt-1">{s.label}</div>
-              </div>
-            ))}
-          </div>
         </div>
-      </section>
-
-      {/* PRODUITS */}
-      <section id="produits" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center mb-14">
-          <h2 className="font-heading font-bold text-3xl sm:text-4xl">Nos solutions</h2>
-          <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-            Une suite d'outils complémentaires pour chaque étape de votre transition bas carbone.
-          </p>
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {PRODUCTS.map((p) => (
-            <a
-              key={p.name}
-              href={p.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group block rounded-xl border border-border bg-card p-6 card-hover"
-            >
-              <div className="text-4xl mb-4">{p.emoji}</div>
-              <h3 className="font-heading font-bold text-lg text-card-foreground group-hover:text-primary transition-colors">
-                {p.name}
-              </h3>
-              <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{p.description}</p>
-              <div className="flex flex-wrap gap-2 mt-4">
-                {p.tags.map((t) => (
-                  <span
-                    key={t}
-                    className="text-[10px] font-medium px-2.5 py-1 rounded-full border border-border bg-secondary text-secondary-foreground"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-              <div className="mt-4 text-xs font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-                En savoir plus →
-              </div>
-            </a>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mt-20 pt-10 border-t border-border">
+          {STATS.map((s) => (
+            <div key={s.label}>
+              <div className="font-heading font-bold text-3xl sm:text-4xl text-foreground">{s.value}</div>
+              <div className="text-sm text-muted-foreground mt-1">{s.label}</div>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* POURQUOI NOUS */}
-      <section id="pourquoi" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <h2 className="font-heading font-bold text-3xl sm:text-4xl">
-              Pourquoi choisir <span className="gradient-text">Decarbotech</span> ?
+      {/* PRODUITS */}
+      <section id="produits" className="py-24 px-5 sm:px-8 bg-card">
+        <div className="max-w-6xl mx-auto">
+          <div className="max-w-xl mb-16">
+            <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Solutions</p>
+            <h2 className="font-heading font-bold text-3xl sm:text-4xl text-card-foreground">
+              Une suite complète pour votre stratégie carbone
             </h2>
-            <p className="text-muted-foreground mt-4 leading-relaxed">
-              Nous combinons expertise climat et technologie de pointe pour vous offrir des résultats mesurables et vérifiables.
-            </p>
-            <div className="grid sm:grid-cols-2 gap-6 mt-10">
+          </div>
+          <div className="grid sm:grid-cols-2 gap-6">
+            {PRODUCTS.map((p) => (
+              <a
+                key={p.name}
+                href={p.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block rounded-lg border border-border bg-background p-8 card-hover"
+              >
+                <div className="flex items-start justify-between">
+                  <div className="text-3xl">{p.emoji}</div>
+                  <svg className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 17L17 7M17 7H7M17 7v10" />
+                  </svg>
+                </div>
+                <h3 className="font-heading font-bold text-xl text-foreground mt-4 group-hover:text-primary transition-colors">
+                  {p.name}
+                </h3>
+                <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{p.description}</p>
+                <div className="flex flex-wrap gap-2 mt-5">
+                  {p.tags.map((t) => (
+                    <span
+                      key={t}
+                      className="text-xs font-medium px-3 py-1 rounded-full bg-secondary text-secondary-foreground"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* POURQUOI NOUS */}
+      <section id="pourquoi" className="py-24 px-5 sm:px-8">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-20 items-start">
+          <div>
+            <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Avantages</p>
+            <h2 className="font-heading font-bold text-3xl sm:text-4xl text-foreground">
+              Pourquoi les leaders nous font confiance
+            </h2>
+            <div className="space-y-10 mt-12">
               {FEATURES.map((f) => (
-                <div key={f.title} className="space-y-2">
-                  <div className="text-2xl">{f.icon}</div>
-                  <h4 className="font-heading font-bold text-foreground">{f.title}</h4>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
+                <div key={f.title} className="flex gap-5">
+                  <div className="text-2xl mt-0.5 shrink-0">{f.icon}</div>
+                  <div>
+                    <h4 className="font-heading font-bold text-foreground text-lg">{f.title}</h4>
+                    <p className="text-sm text-muted-foreground mt-1 leading-relaxed">{f.desc}</p>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
-          <div ref={statsSection.ref} className="space-y-6 bg-card rounded-xl border border-border p-8">
-            <h3 className="font-heading font-bold text-lg text-card-foreground">Impact en chiffres</h3>
-            {STATS.map((s) => (
-              <div key={s.label} className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">{s.label}</span>
-                  <span className="font-semibold text-foreground">{s.value}</span>
+          <div ref={statsSection.ref} className="bg-card rounded-lg border border-border p-8 lg:sticky lg:top-24">
+            <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-2">Impact</p>
+            <h3 className="font-heading font-bold text-xl text-card-foreground mb-8">Nos résultats en chiffres</h3>
+            <div className="space-y-7">
+              {STATS.map((s) => (
+                <div key={s.label} className="space-y-2.5">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">{s.label}</span>
+                    <span className="font-semibold text-foreground">{s.value}</span>
+                  </div>
+                  <ProgressBar pct={s.pct} visible={statsSection.visible} />
                 </div>
-                <ProgressBar pct={s.pct} visible={statsSection.visible} />
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* PROCESS */}
-      <section id="process" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center mb-14">
-          <h2 className="font-heading font-bold text-3xl sm:text-4xl">Comment ça marche</h2>
-          <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-            Quatre étapes simples pour transformer votre stratégie carbone.
-          </p>
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {STEPS.map((s, i) => (
-            <div key={s.num} className="relative group">
-              <div className="text-5xl font-heading font-extrabold text-primary/15 group-hover:text-primary/30 transition-colors">
-                {s.num}
+      <section id="process" className="py-24 px-5 sm:px-8 bg-card">
+        <div className="max-w-6xl mx-auto">
+          <div className="max-w-xl mb-16">
+            <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Méthodologie</p>
+            <h2 className="font-heading font-bold text-3xl sm:text-4xl text-card-foreground">
+              Quatre étapes vers la neutralité carbone
+            </h2>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+            {STEPS.map((s) => (
+              <div key={s.num}>
+                <div className="font-heading font-extrabold text-5xl text-primary/20">{s.num}</div>
+                <h4 className="font-heading font-bold text-lg text-card-foreground mt-3">{s.title}</h4>
+                <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{s.desc}</p>
               </div>
-              <h4 className="font-heading font-bold text-lg mt-2 text-foreground">{s.title}</h4>
-              <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{s.desc}</p>
-              {i < STEPS.length - 1 && (
-                <div className="hidden lg:block absolute top-8 -right-4 text-border text-2xl">→</div>
-              )}
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center bg-card rounded-2xl border border-border p-10 sm:p-16">
-          <h2 className="font-heading font-bold text-3xl sm:text-4xl">
-            Prêt à <span className="gradient-text">décarboner</span> ?
+      <section id="contact" className="py-24 px-5 sm:px-8">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="font-heading font-bold text-3xl sm:text-4xl text-foreground">
+            Prêt à accélérer votre transition carbone ?
           </h2>
-          <p className="text-muted-foreground mt-4 max-w-lg mx-auto">
-            Contactez-nous pour une démo personnalisée ou envoyez-nous un email directement.
+          <p className="text-muted-foreground mt-5 text-lg max-w-xl mx-auto leading-relaxed">
+            Prenez rendez-vous avec notre équipe pour une démonstration personnalisée de nos solutions.
           </p>
-          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
             <a
               href="mailto:contact@decarbotech.com"
-              className="px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity glow-sm"
+              className="inline-flex items-center justify-center px-8 py-4 rounded-md bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity glow-sm"
             >
               contact@decarbotech.com
             </a>
             <a
               href="tel:+33140000000"
-              className="px-8 py-3.5 rounded-lg border border-border text-foreground font-semibold text-sm hover:bg-secondary transition-colors"
+              className="inline-flex items-center justify-center px-8 py-4 rounded-md border border-border text-foreground font-semibold text-sm hover:bg-secondary transition-colors"
             >
               +33 1 40 00 00 00
             </a>
@@ -310,31 +309,29 @@ export default function Index() {
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-border py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+      <footer className="border-t border-border py-16 px-5 sm:px-8">
+        <div className="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-12">
           <div>
-            <span className="font-heading font-bold text-lg">
-              <span className="text-primary">Decarbo</span>tech
-            </span>
-            <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
+            <span className="font-heading font-bold text-xl text-foreground">Decarbotech</span>
+            <p className="text-sm text-muted-foreground mt-4 leading-relaxed">
               La technologie au service de la transition bas carbone. Paris, France.
             </p>
           </div>
           <div>
-            <h4 className="font-heading font-bold text-sm text-foreground mb-3">Produits</h4>
-            <ul className="space-y-2">
+            <h4 className="font-heading font-bold text-sm text-foreground mb-4">Solutions</h4>
+            <ul className="space-y-3">
               {PRODUCTS.map((p) => (
                 <li key={p.name}>
                   <a href={p.url} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                    {p.emoji} {p.name}
+                    {p.name}
                   </a>
                 </li>
               ))}
             </ul>
           </div>
           <div>
-            <h4 className="font-heading font-bold text-sm text-foreground mb-3">Navigation</h4>
-            <ul className="space-y-2">
+            <h4 className="font-heading font-bold text-sm text-foreground mb-4">Navigation</h4>
+            <ul className="space-y-3">
               {NAV_LINKS.map((l) => (
                 <li key={l.href}>
                   <a href={l.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
@@ -345,25 +342,16 @@ export default function Index() {
             </ul>
           </div>
           <div>
-            <h4 className="font-heading font-bold text-sm text-foreground mb-3">Contact</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <a href="mailto:contact@decarbotech.com" className="hover:text-foreground transition-colors">
-                  contact@decarbotech.com
-                </a>
-              </li>
-              <li>
-                <a href="tel:+33140000000" className="hover:text-foreground transition-colors">
-                  +33 1 40 00 00 00
-                </a>
-              </li>
-              <li>Paris, France 🇫🇷</li>
+            <h4 className="font-heading font-bold text-sm text-foreground mb-4">Contact</h4>
+            <ul className="space-y-3 text-sm text-muted-foreground">
+              <li><a href="mailto:contact@decarbotech.com" className="hover:text-foreground transition-colors">contact@decarbotech.com</a></li>
+              <li><a href="tel:+33140000000" className="hover:text-foreground transition-colors">+33 1 40 00 00 00</a></li>
+              <li>Paris, France</li>
             </ul>
           </div>
         </div>
-        <div className="max-w-7xl mx-auto mt-10 pt-6 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="max-w-6xl mx-auto mt-12 pt-8 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-muted-foreground">© 2026 Decarbotech. Tous droits réservés.</p>
-          <p className="text-xs text-muted-foreground">Fait avec 💚 pour la planète</p>
         </div>
       </footer>
     </div>
