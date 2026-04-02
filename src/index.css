@@ -74,7 +74,7 @@
   }
 
   .glow-sm {
-    box-shadow: 0 0 20px -5px hsl(152 100% 45% / 0.2);
+    box-shadow: 0 0 20px -5px hsl(152 72% 34% / 0.25);
   }
 }
 
