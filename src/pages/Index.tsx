@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef } from "react";
-import { Zap, ShieldCheck, Link2, Award, Linkedin, Send, Phone, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Zap, ShieldCheck, Link2, Award, Linkedin, Send, Phone, MapPin, FileText } from "lucide-react";
 import { toast } from "sonner";
 import logo from "@/assets/logo_decarbotech.png";
 import logoCarboscan from "@/assets/logo_carboscan.png";
 import logoHydroscan from "@/assets/logo_hydroscan.png";
 import logoDecarbobat from "@/assets/logo_decarbobat.png";
 import logoWastescan from "@/assets/logo_wastescan.svg";
+import logoKeyconsulting from "@/assets/logo_keyconsulting.png";
 import heroImage from "@/assets/hero_decarbonation.jpg";
 
 const NAV_LINKS = [
@@ -60,10 +62,11 @@ const PRODUCTS = [
     description: "Suivi des flux de déchets industriels, conformité réglementaire et pilotage de votre transition vers l'économie circulaire sur l'ensemble de vos sites.",
     features: ["Cartographie & suivi des flux de déchets", "Conformité réglementaire déchets industriels", "Plan d'action économie circulaire"],
     tags: ["Déchets", "Économie circulaire", "Conformité"],
-    accent: "border-purple-500",
+    accent: "border-purple-300",
     accentBg: "bg-purple-50 dark:bg-purple-950/20",
-    accentText: "text-purple-700 dark:text-purple-400",
+    accentText: "text-purple-400",
     url: "https://wastescan.io",
+    comingSoon: true,
   },
 ];
 
@@ -71,7 +74,7 @@ const FEATURES = [
   { Icon: Zap, title: "Données temps réel", desc: "Synchronisation continue avec vos systèmes existants pour des mesures toujours à jour." },
   { Icon: ShieldCheck, title: "Sécurité souveraine", desc: "Hébergement européen, chiffrement de bout en bout, conformité RGPD." },
   { Icon: Link2, title: "Intégration native", desc: "API REST et connecteurs ERP, CRM, comptabilité prêts à l'emploi." },
-  { Icon: Award, title: "Standards reconnus", desc: "Méthodologie alignée GHG Protocol, SBTi et taxonomie européenne." },
+  { Icon: FileText, title: "Rapport GRI automatisé", desc: "Vos données génèrent automatiquement un rapport GRI prêt à soumettre à vos partenaires et investisseurs." },
 ];
 
 const STATS = [
@@ -209,12 +212,15 @@ export default function Index() {
           <a href="#" className="flex items-center">
             <img src={logo} alt="DecarboTech" className="h-14" />
           </a>
-          <div className="hidden md:flex items-center gap-10">
+          <div className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map((l) => (
               <a key={l.href} href={l.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">
                 {l.label}
               </a>
             ))}
+            <Link to="/rse" className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">
+              RSE & ESG
+            </Link>
             <a
               href="#contact"
               className="px-6 py-2.5 rounded-md bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-opacity"
@@ -238,6 +244,9 @@ export default function Index() {
                 {l.label}
               </a>
             ))}
+            <Link to="/rse" onClick={() => setMobileMenu(false)} className="block py-3 text-sm text-muted-foreground hover:text-foreground font-medium">
+              RSE & ESG
+            </Link>
             <a href="#contact" onClick={() => setMobileMenu(false)} className="block py-3 text-sm font-semibold text-primary">
               Prendre rendez-vous
             </a>
@@ -294,6 +303,49 @@ export default function Index() {
                 {name}
               </span>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PARTENAIRES */}
+      <section className="py-16 px-5 sm:px-8 bg-card border-y border-border">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-10">
+            Notre partenaire expert
+          </p>
+          <div className="grid lg:grid-cols-2 gap-10 items-center">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-8">
+              <img src={logoKeyconsulting} alt="Key Consulting Tunisie" className="h-16 object-contain shrink-0" loading="lazy" />
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold mb-3">
+                  Partenaire officiel
+                </div>
+                <h3 className="font-heading font-bold text-2xl text-foreground">Key Consulting Tunisie</h3>
+                <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
+                  Cabinet de renommée en RSE, ESG & reporting GRI. En partenariat avec DecarboTech, Key Consulting accompagne les entreprises dans leur démarche de certification environnementale et la production de rapports conformes aux standards internationaux.
+                </p>
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {["RSE", "ESG", "GRI", "CSRD"].map((tag) => (
+                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full bg-primary/10 text-primary">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { title: "Conseil RSE", desc: "Stratégie et déploiement de votre politique RSE adaptée à votre secteur." },
+                { title: "Reporting GRI", desc: "Production de rapports GRI conformes pour vos parties prenantes." },
+                { title: "Formation ESG", desc: "Sensibilisation et formation de vos équipes aux enjeux ESG." },
+                { title: "Certification", desc: "Accompagnement vers les certifications environnementales reconnues." },
+              ].map((s) => (
+                <div key={s.title} className="rounded-lg border border-border bg-background p-5">
+                  <h4 className="font-heading font-bold text-sm text-foreground mb-1.5">{s.title}</h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -376,24 +428,25 @@ export default function Index() {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {PRODUCTS.map((p) => (
-              <div key={p.name} className={`group rounded-xl border-t-4 ${p.accent} border-x border-b border-border bg-background flex flex-col card-hover overflow-hidden`}>
+              <div key={p.name} className={`group rounded-xl border-t-4 ${p.accent} border-x border-b border-border flex flex-col overflow-hidden ${'comingSoon' in p && p.comingSoon ? 'bg-muted/40 opacity-70' : 'bg-background card-hover'}`}>
                 <div className="p-8 flex-1 flex flex-col">
                   <div className="flex items-start justify-between mb-6">
                     {p.logo
-                      ? <img src={p.logo} alt={p.name} className="h-10 object-contain" loading="lazy" />
+                      ? <img src={p.logo} alt={p.name} className={`h-10 object-contain ${'comingSoon' in p && p.comingSoon ? 'grayscale' : ''}`} loading="lazy" />
                       : <span className={`font-heading font-extrabold text-lg tracking-tight ${p.accentText}`}>{p.name}</span>
                     }
-                    <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${p.accentBg} ${p.accentText}`}>
-                      SaaS
-                    </span>
+                    {'comingSoon' in p && p.comingSoon
+                      ? <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-muted text-muted-foreground">Bientôt</span>
+                      : <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${p.accentBg} ${p.accentText}`}>SaaS</span>
+                    }
                   </div>
                   <p className={`text-xs font-semibold uppercase tracking-wider ${p.accentText} mb-2`}>{p.tagline}</p>
                   <h3 className="font-heading font-bold text-2xl text-foreground mb-4">{p.name}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed mb-6">{p.description}</p>
                   <ul className="space-y-2.5 mb-8">
                     {p.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2.5 text-sm text-foreground">
-                        <svg className={`w-4 h-4 mt-0.5 shrink-0 ${p.accentText}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <li key={f} className="flex items-start gap-2.5 text-sm text-muted-foreground">
+                        <svg className="w-4 h-4 mt-0.5 shrink-0 text-muted-foreground/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
                         {f}
@@ -401,21 +454,72 @@ export default function Index() {
                     ))}
                   </ul>
                   <div className="mt-auto">
-                    <a
-                      href={p.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`inline-flex items-center gap-2 text-sm font-semibold ${p.accentText} hover:underline`}
-                    >
-                      Découvrir {p.name}
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 17L17 7M17 7H7M17 7v10" />
-                      </svg>
-                    </a>
+                    {'comingSoon' in p && p.comingSoon
+                      ? <span className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground cursor-not-allowed">
+                          En cours de développement…
+                        </span>
+                      : <a
+                          href={p.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`inline-flex items-center gap-2 text-sm font-semibold ${p.accentText} hover:underline`}
+                        >
+                          Découvrir {p.name}
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 17L17 7M17 7H7M17 7v10" />
+                          </svg>
+                        </a>
+                    }
                   </div>
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* GRI CALLOUT */}
+      <section className="py-16 sm:py-20 px-5 sm:px-8 bg-primary">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-10 items-center">
+            <div>
+              <p className="text-xs font-semibold tracking-widest uppercase text-primary-foreground/60 mb-3">Rapport GRI</p>
+              <h2 className="font-heading font-bold text-3xl sm:text-4xl text-primary-foreground">
+                Vos données DecarboTech → rapport GRI en un clic
+              </h2>
+              <p className="text-primary-foreground/80 mt-5 text-base leading-relaxed">
+                Vos clients, investisseurs et donneurs d’ordre exigent un rapport GRI ? Toutes vos mesures environnementales sont automatiquement formatées selon les standards GRI — prêtes à soumettre, sans ressaisie.
+              </p>
+              <div className="mt-8 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                <a
+                  href="#contact"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-primary-foreground text-primary font-semibold text-sm hover:opacity-90 transition-opacity"
+                >
+                  <FileText className="w-4 h-4" />
+                  Demander une démo GRI
+                </a>
+                <div className="flex items-center gap-2 px-4 py-2.5 rounded-md bg-primary-foreground/10 border border-primary-foreground/20">
+                  <div className="w-2 h-2 rounded-full bg-green-400 shrink-0" />
+                  <span className="text-xs text-primary-foreground/90 font-medium">
+                    En partenariat avec <span className="font-bold">Key Consulting Tunisie</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { code: "GRI 302", label: "Énergie", app: "DecarboBat" },
+                { code: "GRI 303", label: "Eau", app: "HydroScan" },
+                { code: "GRI 305", label: "Émissions", app: "CarbonScan" },
+                { code: "GRI 306", label: "Déchets", app: "WasteScan" },
+              ].map((g) => (
+                <div key={g.code} className="rounded-lg bg-primary-foreground/10 border border-primary-foreground/20 p-5">
+                  <div className="text-xs font-bold text-primary-foreground/60 mb-1">{g.code}</div>
+                  <div className="font-heading font-bold text-lg text-primary-foreground">{g.label}</div>
+                  <div className="text-xs text-primary-foreground/60 mt-1">→ {g.app}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -555,6 +659,11 @@ export default function Index() {
                   </a>
                 </li>
               ))}
+              <li>
+                <Link to="/rse" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  RSE & ESG
+                </Link>
+              </li>
             </ul>
           </div>
           <div>
