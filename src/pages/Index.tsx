@@ -13,9 +13,6 @@ import heroImage from "@/assets/hero_decarbonation.jpg";
 const NAV_LINKS = [
   { label: "À propos", href: "#a-propos" },
   { label: "Solutions", href: "#produits" },
-  { label: "Avantages", href: "#pourquoi" },
-  { label: "Méthodologie", href: "#process" },
-  { label: "Contact", href: "#contact" },
 ];
 
 const PRODUCTS = [
@@ -212,7 +209,7 @@ export default function Index() {
           <a href="#" className="flex items-center">
             <img src={logo} alt="DecarboTech" className="h-14" />
           </a>
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-6">
             {NAV_LINKS.map((l) => (
               <a key={l.href} href={l.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">
                 {l.label}
@@ -221,6 +218,9 @@ export default function Index() {
             <Link to="/rse" className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">
               RSE & ESG
             </Link>
+            <a href="#contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">
+              Contact
+            </a>
             <a
               href="#contact"
               className="px-6 py-2.5 rounded-md bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-opacity"
@@ -247,6 +247,9 @@ export default function Index() {
             <Link to="/rse" onClick={() => setMobileMenu(false)} className="block py-3 text-sm text-muted-foreground hover:text-foreground font-medium">
               RSE & ESG
             </Link>
+            <a href="#contact" onClick={() => setMobileMenu(false)} className="block py-3 text-sm text-muted-foreground hover:text-foreground font-medium">
+              Contact
+            </a>
             <a href="#contact" onClick={() => setMobileMenu(false)} className="block py-3 text-sm font-semibold text-primary">
               Prendre rendez-vous
             </a>
