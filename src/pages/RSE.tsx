@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FileText, Leaf, Users, ShieldCheck, Award, ArrowRight, Phone, Send, MapPin } from "lucide-react";
+import { FileText, Leaf, Users, ShieldCheck, Award, ArrowRight, Phone, Send, MapPin, Check, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo_decarbotech.png";
@@ -54,6 +54,158 @@ const REGLEMENTS = [
   { name: "ESRS", full: "European Sustainability Reporting Standards", desc: "12 normes techniques qui détaillent comment appliquer la CSRD en pratique.", date: "Obligatoire CSRD" },
   { name: "GHG Protocol", full: "Greenhouse Gas Protocol", desc: "Méthodologie internationale de comptabilisation des émissions carbone Scope 1, 2 et 3.", date: "Référence mondiale" },
 ];
+
+const SECTORS = [
+  { value: "industrie", label: "Industrie & Manufacture" },
+  { value: "service", label: "Services" },
+  { value: "batiment", label: "Bâtiment & Construction" },
+  { value: "tech", label: "Tech & Numérique" },
+  { value: "autre", label: "Autre" },
+];
+
+const QUESTIONS = [
+  { id: "sector", question: "Votre secteur d'activité ?", options: SECTORS },
+  { id: "employees", question: "Combien de salariés dans votre entreprise ?", options: [
+    { value: "lt10", label: "Moins de 10" },
+    { value: "bt10_50", label: "10 à 50" },
+    { value: "gt50", label: "Plus de 50" },
+  ]},
+  { id: "co2", question: "Mesurez-vous vos émissions CO₂ ?", options: [
+    { value: "oui", label: "Oui" },
+    { value: "en_cours", label: "En cours" },
+    { value: "non", label: "Non" },
+  ]},
+  { id: "hr", question: "Avez-vous une politique RH formalisée ?", options: [
+    { value: "oui", label: "Oui" },
+    { value: "en_cours", label: "En cours" },
+    { value: "non", label: "Non" },
+  ]},
+  { id: "report", question: "Publiez-vous un rapport annuel ?", options: [
+    { value: "oui", label: "Oui" },
+    { value: "non", label: "Non" },
+  ]},
+];
+
+type Answers = Record<string, string>;
+
+function calcScore(answers: Answers) {
+  let e = 20, s = 20, g = 25;
+  const sE: Record<string, number> = { tech: 15, service: 12, batiment: 10, industrie: 8, autre: 8 };
+  const sS: Record<string, number> = { industrie: 15, service: 12, batiment: 12, tech: 8, autre: 8 };
+  e += sE[answers.sector] ?? 8;
+  s += sS[answers.sector] ?? 8;
+  s += ({ lt10: 5, bt10_50: 10, gt50: 18 } as Record<string,number>)[answers.employees] ?? 5;
+  e += ({ oui: 35, en_cours: 18, non: 0 } as Record<string,number>)[answers.co2] ?? 0;
+  s += ({ oui: 30, en_cours: 15, non: 0 } as Record<string,number>)[answers.hr] ?? 0;
+  g += answers.report === "oui" ? 28 : 0;
+  e = Math.min(e, 100); s = Math.min(s, 100); g = Math.min(g, 100);
+  const global = Math.min(75, Math.max(30, Math.round((e + s + g) / 3)));
+  return { e, s, g, global };
+}
+
+function GaugeSVG({ value, color, label, delay = 0 }: { value: number; color: string; label: string; delay?: number }) {
+  const [animated, setAnimated] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setAnimated(true), 200 + delay);
+    return () => clearTimeout(t);
+  }, [delay]);
+  const r = 15.9155;
+  const circ = 2 * Math.PI * r;
+  const dash = animated ? (value / 100) * circ : 0;
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <div className="relative w-24 h-24">
+        <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
+          <circle cx="18" cy="18" r={r} fill="none" stroke="#e5e7eb" strokeWidth="3" />
+          <circle cx="18" cy="18" r={r} fill="none" stroke={color} strokeWidth="3"
+            strokeDasharray={`${dash} ${circ}`} strokeLinecap="round"
+            style={{ transition: "stroke-dasharray 1.4s cubic-bezier(0.22,1,0.36,1)" }} />
+        </svg>
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <span className="font-bold text-lg text-foreground">{animated ? value : 0}</span>
+          <span className="text-xs text-muted-foreground">/100</span>
+        </div>
+      </div>
+      <span className="text-xs font-semibold text-muted-foreground">{label}</span>
+    </div>
+  );
+}
+
+function Questionnaire() {
+  const [step, setStep] = useState(0);
+  const [answers, setAnswers] = useState<Answers>({});
+  const [score, setScore] = useState<ReturnType<typeof calcScore> | null>(null);
+  const q = QUESTIONS[step];
+  const choose = (val: string) => {
+    const next = { ...answers, [q.id]: val };
+    setAnswers(next);
+    if (step < QUESTIONS.length - 1) {
+      setTimeout(() => setStep((s) => s + 1), 180);
+    } else {
+      setScore(calcScore(next));
+    }
+  };
+  const restart = () => { setStep(0); setAnswers({}); setScore(null); };
+
+  if (score) {
+    return (
+      <div>
+        <div className="text-center mb-8">
+          <p className="font-heading font-bold text-2xl text-foreground mb-1">
+            Score ESG : <span className="text-primary">{score.global}/100</span>
+          </p>
+          <p className="text-sm text-muted-foreground">Diagnostic indicatif basé sur vos réponses</p>
+        </div>
+        <div className="flex justify-center gap-8 sm:gap-12 mb-8">
+          <GaugeSVG value={score.e} color="#16a34a" label="Environnemental" delay={0} />
+          <GaugeSVG value={score.s} color="#2563eb" label="Social" delay={200} />
+          <GaugeSVG value={score.g} color="#7c3aed" label="Gouvernance" delay={400} />
+        </div>
+        <div className="rounded-lg border border-primary/20 bg-primary/5 p-5 mb-6 text-sm text-foreground leading-relaxed">
+          {score.global < 45
+            ? <><strong>Marges d'amélioration importantes.</strong> Un accompagnement structuré vous permettra de progresser rapidement sur les 3 piliers.
+            </>
+            : score.global < 60
+            ? <><strong>Bonne base à consolider.</strong> Il reste à formaliser et certifier votre démarche pour répondre aux exigences de vos parties prenantes.
+            </>
+            : <><strong>Démarche avancée.</strong> Un rapport GRI certifié valorisera votre performance auprès de vos investisseurs et donneurs d'ordre.
+            </>}
+        </div>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <a href="#contact" className="inline-flex items-center justify-center gap-2 py-3 rounded-md bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity">
+            Être accompagné par Key Consulting
+          </a>
+          <button onClick={restart} className="inline-flex items-center justify-center gap-2 py-3 rounded-md border border-border font-semibold text-sm hover:bg-secondary transition-colors">
+            Recommencer
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <div className="flex items-center gap-2 mb-6">
+        {QUESTIONS.map((_, i) => (
+          <div key={i} className="flex-1 h-1.5 rounded-full transition-all duration-300"
+            style={{ background: i <= step ? 'hsl(var(--primary))' : 'hsl(var(--border))' }} />
+        ))}
+      </div>
+      <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-2">Question {step + 1} / {QUESTIONS.length}</p>
+      <h3 className="font-heading font-bold text-xl text-foreground mb-5">{q.question}</h3>
+      <div className="space-y-3">
+        {q.options.map((opt) => (
+          <button key={opt.value} onClick={() => choose(opt.value)}
+            className="w-full text-left px-5 py-4 rounded-lg border-2 font-medium text-sm flex items-center justify-between hover:border-primary transition-all group"
+            style={{ borderColor: answers[q.id] === opt.value ? 'hsl(var(--primary))' : 'hsl(var(--border))' }}>
+            {opt.label}
+            <ChevronRight className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 function ContactForm() {
   const [form, setForm] = useState({ name: "", email: "", company: "", message: "" });
@@ -128,6 +280,7 @@ export default function RSE() {
             <a href="#piliers" className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">Les 3 piliers</a>
             <a href="#reglements" className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">Réglementations</a>
             <a href="#gri" className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">GRI</a>
+            <a href="#diagnostic" className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">Diagnostic</a>
             <a href="#contact" className="px-6 py-2.5 rounded-md bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-opacity">
               Nous contacter
             </a>
@@ -152,8 +305,8 @@ export default function RSE() {
 
       {/* HERO */}
       <section className="pt-28 sm:pt-36 pb-16 sm:pb-24 px-5 sm:px-8 bg-card border-b border-border">
-        <div className="max-w-6xl mx-auto">
-          <div className="max-w-3xl">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+          <div>
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold tracking-wide uppercase mb-8">
               RSE & ESG
             </div>
@@ -161,16 +314,46 @@ export default function RSE() {
               Comprendre et piloter votre{" "}
               <span className="gradient-text">démarche RSE & ESG</span>
             </h1>
-            <p className="text-muted-foreground text-lg sm:text-xl mt-6 leading-relaxed max-w-2xl">
-              Réglementations, standards GRI, piliers environnemental, social et gouvernance — tout ce que votre entreprise doit savoir pour agir concrètement et se conformer aux exigences de vos parties prenantes.
+            <p className="text-muted-foreground text-lg sm:text-xl mt-6 leading-relaxed">
+              Réglementations, standards GRI, piliers E, S & G — tout ce que votre entreprise doit savoir pour agir et se conformer aux exigences de vos parties prenantes.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mt-10">
-              <a href="#piliers" className="inline-flex items-center justify-center px-8 py-3.5 rounded-md bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity glow-sm">
-                Découvrir les 3 piliers
+              <a href="#diagnostic" className="inline-flex items-center justify-center px-8 py-3.5 rounded-md bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity glow-sm">
+                Tester mon score ESG
               </a>
               <a href="#contact" className="inline-flex items-center justify-center px-8 py-3.5 rounded-md border border-border text-foreground font-semibold text-sm hover:bg-secondary transition-colors">
                 Parler à un expert
               </a>
+            </div>
+          </div>
+          <div className="flex justify-center">
+            <div className="rounded-2xl shadow-lg border border-border bg-background p-8 w-full max-w-sm">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <p className="text-xs text-muted-foreground font-medium mb-1">Score ESG indicatif</p>
+                  <p className="font-heading font-bold text-3xl text-foreground">62<span className="text-lg text-muted-foreground">/100</span></p>
+                </div>
+                <span className="px-3 py-1.5 rounded-full text-xs font-semibold bg-primary/10 text-primary">Intermédiaire</span>
+              </div>
+              <div className="flex justify-around">
+                <GaugeSVG value={72} color="#16a34a" label="E" delay={0} />
+                <GaugeSVG value={58} color="#2563eb" label="S" delay={300} />
+                <GaugeSVG value={55} color="#7c3aed" label="G" delay={600} />
+              </div>
+              <div className="mt-6 space-y-2 border-t border-border pt-4">
+                {[
+                  { label: "Bilan carbone", done: true },
+                  { label: "Politique RH", done: true },
+                  { label: "Rapport GRI", done: false },
+                ].map((item) => (
+                  <div key={item.label} className="flex items-center gap-3 text-sm">
+                    <div className={`w-4 h-4 rounded-full flex items-center justify-center ${item.done ? 'bg-green-500' : 'bg-muted'}`}>
+                      {item.done && <Check className="w-2.5 h-2.5 text-white" />}
+                    </div>
+                    <span className={item.done ? 'text-foreground' : 'text-muted-foreground'}>{item.label}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -357,6 +540,67 @@ export default function RSE() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* TABLEAU COMPARATIF */}
+      <section className="py-16 sm:py-24 px-5 sm:px-8 bg-card">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Comparatif</p>
+            <h2 className="font-heading font-bold text-3xl sm:text-4xl text-foreground">
+              Diagnostic gratuit vs Accompagnement complet
+            </h2>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-6">
+            <div className="rounded-xl border-2 border-border bg-background p-8">
+              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">Diagnostic gratuit</p>
+              <p className="font-heading font-bold text-2xl text-foreground mb-1">Score ESG instantané</p>
+              <p className="font-extrabold text-3xl text-primary mb-6">Gratuit</p>
+              <ul className="space-y-3 mb-8">
+                {["Score ESG indicatif sur 100","Analyse par pilier E, S & G","Identification des lacunes","Recommandations de base","Résultat en 2 minutes"].map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-sm text-muted-foreground">
+                    <Check className="w-4 h-4 mt-0.5 shrink-0 text-primary" />{item}
+                  </li>
+                ))}
+              </ul>
+              <a href="#diagnostic" className="w-full inline-flex items-center justify-center py-3 rounded-md border-2 border-primary text-primary font-semibold text-sm hover:bg-primary/5 transition-colors">
+                Démarrer le diagnostic
+              </a>
+            </div>
+            <div className="rounded-xl border-2 border-primary bg-primary/5 p-8 relative overflow-hidden">
+              <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold bg-primary text-primary-foreground">Recommandé</div>
+              <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-2">Accompagnement complet</p>
+              <p className="font-heading font-bold text-2xl text-foreground mb-1">Key Consulting</p>
+              <p className="text-sm text-muted-foreground mb-6">Sur devis · Contrat annuel</p>
+              <ul className="space-y-3 mb-8">
+                {["Rapport certifié GRI Standards","Conformité ISO 26000 / TNFD / CSRD","Plan d'action sur mesure","Suivi trimestriel dédié","Badge RSE officiel","Présentation aux investisseurs & banques"].map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-sm text-foreground">
+                    <Check className="w-4 h-4 mt-0.5 shrink-0 text-primary" />{item}
+                  </li>
+                ))}
+              </ul>
+              <a href="#contact" className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-md bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity">
+                Contacter Key Consulting <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* DIAGNOSTIC */}
+      <section id="diagnostic" className="py-16 sm:py-24 px-5 sm:px-8">
+        <div className="max-w-2xl mx-auto">
+          <div className="text-center mb-10">
+            <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Diagnostic gratuit</p>
+            <h2 className="font-heading font-bold text-3xl sm:text-4xl text-foreground mb-3">
+              Testez votre score ESG maintenant
+            </h2>
+            <p className="text-muted-foreground text-sm">5 questions · 2 minutes · Résultat instantané</p>
+          </div>
+          <div className="rounded-xl border border-border bg-card p-8 shadow-sm">
+            <Questionnaire />
           </div>
         </div>
       </section>
