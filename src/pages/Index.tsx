@@ -217,7 +217,7 @@ export default function Index() {
                 </a>
               ))}
               <Link to="/rse" className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">
-                RSE & ESG
+                ESGScan
               </Link>
               <a href="#contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">
                 Contact
@@ -247,7 +247,7 @@ export default function Index() {
               </a>
             ))}
             <Link to="/rse" onClick={() => setMobileMenu(false)} className="block py-3 text-sm text-muted-foreground hover:text-foreground font-medium">
-              RSE & ESG
+              ESGScan
             </Link>
             <a href="#contact" onClick={() => setMobileMenu(false)} className="block py-3 text-sm text-muted-foreground hover:text-foreground font-medium">
               Contact
