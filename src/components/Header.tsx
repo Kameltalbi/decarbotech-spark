@@ -194,19 +194,15 @@ export default function Header() {
             </div>
           )}
 
-          <Link to="/rse" onClick={close}
-            className="flex items-center gap-2 py-3 text-sm font-medium text-muted-foreground hover:text-foreground">
-            ESGScan
-            {!isRSE && <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700">Gratuit</span>}
-          </Link>
           <a href="#contact" onClick={close}
             className="block py-3 text-sm text-muted-foreground hover:text-foreground font-medium">
             Contact
           </a>
-          <a href={isRSE ? "#diagnostic" : "/rse#diagnostic"} onClick={close}
-            className="block py-3 text-sm font-semibold text-primary">
+          <Link to="/rse" onClick={close}
+            className="flex items-center gap-2 py-3 text-sm font-semibold text-primary">
             Diagnostic ESG
-          </a>
+            <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700">Gratuit</span>
+          </Link>
         </div>
       )}
     </nav>
