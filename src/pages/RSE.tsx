@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import DiagnosticESG from "@/components/DiagnosticESG";
+import Header from "@/components/Header";
 import { FileText, Leaf, Users, ShieldCheck, Award, ArrowRight, Phone, Send, MapPin, Check, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
@@ -538,51 +540,9 @@ function ContactForm() {
 }
 
 export default function RSE() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileMenu, setMobileMenu] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
     <div className="min-h-screen bg-background text-foreground font-body">
-
-      {/* NAV */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "glass-nav shadow-sm" : "bg-transparent"}`}>
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 flex items-center justify-between h-[72px]">
-          <Link to="/" className="flex items-center">
-            <img src={logo} alt="DecarboTech" className="h-14" />
-          </Link>
-          <div className="hidden md:flex items-center gap-8">
-            <Link to="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">Accueil</Link>
-            <a href="#piliers" className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">Les 3 piliers</a>
-            <a href="#reglements" className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">Réglementations</a>
-            <a href="#gri" className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">GRI</a>
-            <a href="#diagnostic" className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">Diagnostic</a>
-            <a href="#contact" className="px-6 py-2.5 rounded-md bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-opacity">
-              Nous contacter
-            </a>
-          </div>
-          <button className="md:hidden text-foreground" onClick={() => setMobileMenu(!mobileMenu)} aria-label="Menu">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {mobileMenu
-                ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
-                : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />}
-            </svg>
-          </button>
-        </div>
-        {mobileMenu && (
-          <div className="md:hidden bg-card border-t border-border px-5 pb-5 space-y-1">
-            <Link to="/" onClick={() => setMobileMenu(false)} className="block py-3 text-sm text-muted-foreground hover:text-foreground font-medium">Accueil</Link>
-            <a href="#piliers" onClick={() => setMobileMenu(false)} className="block py-3 text-sm text-muted-foreground hover:text-foreground font-medium">Les 3 piliers</a>
-            <a href="#reglements" onClick={() => setMobileMenu(false)} className="block py-3 text-sm text-muted-foreground hover:text-foreground font-medium">Réglementations</a>
-            <a href="#contact" onClick={() => setMobileMenu(false)} className="block py-3 text-sm font-semibold text-primary">Nous contacter</a>
-          </div>
-        )}
-      </nav>
+      <Header />
 
       {/* HERO */}
       <section className="pt-28 sm:pt-36 pb-16 sm:pb-24 px-5 sm:px-8 bg-card border-b border-border">
@@ -934,10 +894,10 @@ export default function RSE() {
             <h2 className="font-heading font-bold text-3xl sm:text-4xl text-foreground mb-3">
               Testez votre score ESG maintenant
             </h2>
-            <p className="text-muted-foreground text-sm">5 questions · 2 minutes · Résultat instantané</p>
+            <p className="text-muted-foreground text-sm">18 critères · 5 minutes · Rapport personnalisé</p>
           </div>
           <div className="rounded-xl border border-border bg-card p-8 shadow-sm">
-            <Questionnaire />
+            <DiagnosticESG />
           </div>
         </div>
       </section>

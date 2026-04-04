@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import Header from "@/components/Header";
 import { Link } from "react-router-dom";
 import { Zap, ShieldCheck, Link2, Award, Linkedin, Send, Phone, MapPin, FileText } from "lucide-react";
 import { toast } from "sonner";
@@ -191,74 +192,11 @@ function ContactForm() {
 }
 
 export default function Index() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileMenu, setMobileMenu] = useState(false);
   const statsSection = useScrollVisible(0.3);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground font-body">
-      {/* NAV */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "glass-nav shadow-sm" : "bg-transparent"}`}>
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 flex items-center justify-between h-[72px]">
-          <div className="flex items-center gap-8">
-            <a href="#" className="flex items-center">
-              <img src={logo} alt="DecarboTech" className="h-14" />
-            </a>
-            <div className="hidden md:flex items-center gap-6">
-              {NAV_LINKS.map((l) => (
-                <a key={l.href} href={l.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">
-                  {l.label}
-                </a>
-              ))}
-              <Link to="/rse" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">
-                ESGScan
-                <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700">Gratuit</span>
-              </Link>
-              <a href="#contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">
-                Contact
-              </a>
-            </div>
-          </div>
-          <Link
-            to="/rse"
-            className="hidden md:inline-flex px-6 py-2.5 rounded-md bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-opacity"
-          >
-            Tester gratuitement
-          </Link>
-          <button className="md:hidden text-foreground" onClick={() => setMobileMenu(!mobileMenu)} aria-label="Menu">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {mobileMenu
-                ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
-                : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
-              }
-            </svg>
-          </button>
-        </div>
-        {mobileMenu && (
-          <div className="md:hidden bg-card border-t border-border px-5 pb-5 space-y-1">
-            {NAV_LINKS.map((l) => (
-              <a key={l.href} href={l.href} onClick={() => setMobileMenu(false)} className="block py-3 text-sm text-muted-foreground hover:text-foreground font-medium">
-                {l.label}
-              </a>
-            ))}
-            <Link to="/rse" onClick={() => setMobileMenu(false)} className="flex items-center gap-2 py-3 text-sm text-muted-foreground hover:text-foreground font-medium">
-              ESGScan <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700">Gratuit</span>
-            </Link>
-            <a href="#contact" onClick={() => setMobileMenu(false)} className="block py-3 text-sm text-muted-foreground hover:text-foreground font-medium">
-              Contact
-            </a>
-            <Link to="/rse" onClick={() => setMobileMenu(false)} className="block py-3 text-sm font-semibold text-primary">
-              Tester gratuitement
-            </Link>
-          </div>
-        )}
-      </nav>
+      <Header />
 
       {/* HERO */}
       <section className="pt-28 sm:pt-36 pb-16 sm:pb-24 px-5 sm:px-8 max-w-6xl mx-auto">
