@@ -572,6 +572,62 @@ export default function RSE() {
         </div>
       </section>
 
+      {/* COMMENT ÇA MARCHE */}
+      <section className="py-16 sm:py-20 px-5 sm:px-8 bg-card border-b border-border">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Processus</p>
+            <h2 className="font-heading font-bold text-3xl sm:text-4xl text-foreground">Comment ça marche</h2>
+            <p className="text-muted-foreground mt-3 text-base max-w-xl mx-auto">Du diagnostic initial à l'accompagnement certifié, un parcours en 3 étapes conçu pour les PME.</p>
+          </div>
+          <div className="grid sm:grid-cols-3 gap-6 relative">
+            <div className="hidden sm:block absolute top-10 left-[33%] w-[17%] border-t-2 border-dashed border-border" />
+            <div className="hidden sm:block absolute top-10 left-[67%] w-[17%] border-t-2 border-dashed border-border" />
+            {[
+              {
+                num: "01",
+                icon: "📋",
+                title: "Répondez au diagnostic ESG",
+                desc: "15 questions couvrant les piliers Environnemental, Social et Gouvernance. Standards GHG Protocol, ISO 45001, GRI intégrés. Durée : 5 minutes.",
+                cta: { label: "Démarrer le diagnostic", href: "#diagnostic" },
+                color: "bg-emerald-50 border-emerald-200",
+              },
+              {
+                num: "02",
+                icon: "📊",
+                title: "Recevez votre score E / S / G",
+                desc: "Score instantané sur 100 par pilier avec votre niveau de maturité (Débutant → Leader ESG), vos lacunes prioritaires et les normes associées.",
+                cta: null,
+                color: "bg-blue-50 border-blue-200",
+              },
+              {
+                num: "03",
+                icon: "🤝",
+                title: "Key Consulting vous accompagne",
+                desc: "Rapport GRI certifié, plan d'action sur mesure, badge RSE officiel. Contrat annuel avec suivi trimestriel dédié par des experts Tunisie & Maghreb.",
+                cta: { label: "Contacter Key Consulting", href: "#contact" },
+                color: "bg-purple-50 border-purple-200",
+              },
+            ].map((step) => (
+              <div key={step.num} className={`rounded-xl border-2 ${step.color} p-7 flex flex-col gap-4`}>
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">{step.icon}</span>
+                  <span className="text-xs font-bold text-muted-foreground tracking-widest">{step.num}</span>
+                </div>
+                <h3 className="font-heading font-bold text-lg text-foreground">{step.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed flex-1">{step.desc}</p>
+                {step.cta && (
+                  <a href={step.cta.href}
+                    className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline mt-auto">
+                    {step.cta.label} →
+                  </a>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* QU'EST-CE QUE LA RSE */}
       <section className="py-16 sm:py-24 px-5 sm:px-8">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
