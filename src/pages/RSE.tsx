@@ -289,6 +289,118 @@ function GaugeSVG({ value, color, label, sublabel, delay = 0 }: { value: number;
   );
 }
 
+function ScoreResults({ score, onRestart }: { score: ReturnType<typeof calcScorePro>; onRestart: () => void }) {
+  const [lead, setLead] = useState({ name: "", email: "", company: "" });
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+
+  const handleSend = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("sending");
+    try {
+      const res = await fetch("/.netlify/functions/send-esg-result", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: lead.name,
+          email: lead.email,
+          company: lead.company,
+          scores: { e: score.e, s: score.s, g: score.g, global: score.global },
+          maturity: score.maturity.label,
+          gaps: score.gaps,
+        }),
+      });
+      setStatus(res.ok ? "sent" : "error");
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <p className="font-heading font-bold text-2xl text-foreground">
+            Score ESG global : <span className="text-primary">{score.global}/100</span>
+          </p>
+          <p className="text-sm text-muted-foreground mt-1">{score.maturity.label} — {ESG_QUESTIONS.length} critères évalués</p>
+        </div>
+      </div>
+
+      <div className="flex justify-center gap-6 sm:gap-10 mb-8">
+        <GaugeSVG value={score.e} color={PILLAR_META.E.color} label="E" sublabel="Environnemental" delay={0} />
+        <GaugeSVG value={score.s} color={PILLAR_META.S.color} label="S" sublabel="Social" delay={250} />
+        <GaugeSVG value={score.g} color={PILLAR_META.G.color} label="G" sublabel="Gouvernance" delay={500} />
+      </div>
+
+      <div className="rounded-lg border border-primary/20 bg-primary/5 p-5 mb-6 text-sm leading-relaxed">
+        <p className="font-semibold text-foreground mb-1">{score.maturity.label}</p>
+        <p className="text-muted-foreground">{score.maturity.desc}</p>
+      </div>
+
+      {score.gaps.length > 0 && (
+        <div className="space-y-3 mb-6">
+          <p className="text-xs font-bold uppercase tracking-wider text-foreground">Priorités d'amélioration identifiées</p>
+          {score.gaps.map((g) => {
+            const m = PILLAR_META[g.pillar];
+            return (
+              <div key={g.pillar} className={`rounded-lg border ${m.border} ${m.bg} p-4`}>
+                <p className={`text-xs font-bold mb-1 ${m.text}`}>Pilier {g.pillar} — {g.label}</p>
+                <p className="text-xs text-foreground leading-relaxed">{g.reco}</p>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Lead capture */}
+      <div className="mt-8 rounded-xl border-2 border-primary/20 bg-primary/5 p-6">
+        {status === "sent" ? (
+          <div className="text-center py-4">
+            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
+              <Check className="w-6 h-6 text-primary" />
+            </div>
+            <p className="font-heading font-bold text-lg text-foreground">Rapport envoyé !</p>
+            <p className="text-sm text-muted-foreground mt-1">Vérifiez votre boîte mail. Key Consulting vous contactera sous 48h.</p>
+            <button onClick={onRestart} className="mt-4 text-xs text-primary underline hover:opacity-80">Recommencer le diagnostic</button>
+          </div>
+        ) : (
+          <>
+            <p className="font-heading font-bold text-base text-foreground mb-1">Recevoir votre rapport ESG par email</p>
+            <p className="text-xs text-muted-foreground mb-5">Votre score + recommandations envoyés instantanément. Key Consulting vous contactera pour un accompagnement sur mesure.</p>
+            <form onSubmit={handleSend} className="space-y-3">
+              <div className="grid sm:grid-cols-2 gap-3">
+                <input required value={lead.name} onChange={(e) => setLead({ ...lead, name: e.target.value })}
+                  placeholder="Votre nom *" type="text"
+                  className="px-4 py-2.5 rounded-md border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30" />
+                <input required value={lead.email} onChange={(e) => setLead({ ...lead, email: e.target.value })}
+                  placeholder="Email professionnel *" type="email"
+                  className="px-4 py-2.5 rounded-md border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30" />
+              </div>
+              <input value={lead.company} onChange={(e) => setLead({ ...lead, company: e.target.value })}
+                placeholder="Société (optionnel)" type="text"
+                className="w-full px-4 py-2.5 rounded-md border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30" />
+              {status === "error" && (
+                <p className="text-xs text-red-600">Erreur lors de l'envoi. Veuillez réessayer ou utiliser le formulaire de contact.</p>
+              )}
+              <div className="flex flex-col sm:flex-row gap-3 pt-1">
+                <button type="submit" disabled={status === "sending"}
+                  className="flex-1 inline-flex items-center justify-center gap-2 py-3 rounded-md bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity disabled:opacity-50">
+                  <Send className="w-4 h-4" />
+                  {status === "sending" ? "Envoi en cours…" : "Recevoir mon rapport ESG"}
+                </button>
+                <button type="button" onClick={onRestart}
+                  className="inline-flex items-center justify-center gap-2 py-3 px-5 rounded-md border border-border text-sm font-semibold hover:bg-secondary transition-colors">
+                  Recommencer
+                </button>
+              </div>
+            </form>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function Questionnaire() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Answers>({});
@@ -317,51 +429,7 @@ function Questionnaire() {
 
   if (score) {
     return (
-      <div>
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <p className="font-heading font-bold text-2xl text-foreground">
-              Score ESG global : <span className="text-primary">{score.global}/100</span>
-            </p>
-            <p className="text-sm text-muted-foreground mt-1">{score.maturity.label} — {ESG_QUESTIONS.length} critères évalués</p>
-          </div>
-        </div>
-
-        <div className="flex justify-center gap-6 sm:gap-10 mb-8">
-          <GaugeSVG value={score.e} color={PILLAR_META.E.color} label="E" sublabel="Environnemental" delay={0} />
-          <GaugeSVG value={score.s} color={PILLAR_META.S.color} label="S" sublabel="Social" delay={250} />
-          <GaugeSVG value={score.g} color={PILLAR_META.G.color} label="G" sublabel="Gouvernance" delay={500} />
-        </div>
-
-        <div className="rounded-lg border border-primary/20 bg-primary/5 p-5 mb-6 text-sm leading-relaxed">
-          <p className="font-semibold text-foreground mb-1">{score.maturity.label}</p>
-          <p className="text-muted-foreground">{score.maturity.desc}</p>
-        </div>
-
-        {score.gaps.length > 0 && (
-          <div className="space-y-3 mb-6">
-            <p className="text-xs font-bold uppercase tracking-wider text-foreground">Priorités d'amélioration identifiées</p>
-            {score.gaps.map((g) => {
-              const m = PILLAR_META[g.pillar];
-              return (
-                <div key={g.pillar} className={`rounded-lg border ${m.border} ${m.bg} p-4`}>
-                  <p className={`text-xs font-bold mb-1 ${m.text}`}>Pilier {g.pillar} — {g.label}</p>
-                  <p className="text-xs text-foreground leading-relaxed">{g.reco}</p>
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        <div className="grid sm:grid-cols-2 gap-4 mt-6">
-          <a href="#contact" className="inline-flex items-center justify-center gap-2 py-3 rounded-md bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity">
-            Être accompagné par Key Consulting
-          </a>
-          <button onClick={restart} className="inline-flex items-center justify-center gap-2 py-3 rounded-md border border-border font-semibold text-sm hover:bg-secondary transition-colors">
-            Recommencer le diagnostic
-          </button>
-        </div>
-      </div>
+      <ScoreResults score={score} onRestart={restart} />
     );
   }
 
