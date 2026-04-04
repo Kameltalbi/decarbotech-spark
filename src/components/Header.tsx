@@ -132,21 +132,15 @@ export default function Header() {
             )}
           </div>
 
-          <Link to="/rse"
-            className={`inline-flex items-center gap-1.5 text-sm font-medium transition-colors ${isRSE ? "text-primary font-semibold" : "text-muted-foreground hover:text-foreground"}`}>
-            ESGScan
-            {!isRSE && (
-              <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700">Gratuit</span>
-            )}
-          </Link>
           <a href="#contact"
             className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">
             Contact
           </a>
-          <a href={isRSE ? "#diagnostic" : "/rse#diagnostic"}
-            className="px-4 py-2 rounded-md border-2 border-primary text-primary text-sm font-semibold hover:bg-primary hover:text-primary-foreground transition-all">
+          <Link to="/rse"
+            className="px-4 py-2 rounded-md border-2 border-primary text-primary text-sm font-semibold hover:bg-primary hover:text-primary-foreground transition-all inline-flex items-center gap-1.5">
             Diagnostic ESG
-          </a>
+            <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700">Gratuit</span>
+          </Link>
         </div>
 
         {/* Mobile burger */}
