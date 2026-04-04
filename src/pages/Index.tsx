@@ -216,20 +216,21 @@ export default function Index() {
                   {l.label}
                 </a>
               ))}
-              <Link to="/rse" className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">
+              <Link to="/rse" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">
                 ESGScan
+                <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700">Gratuit</span>
               </Link>
               <a href="#contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">
                 Contact
               </a>
             </div>
           </div>
-          <a
-            href="#contact"
+          <Link
+            to="/rse"
             className="hidden md:inline-flex px-6 py-2.5 rounded-md bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-opacity"
           >
-            Prendre rendez-vous
-          </a>
+            Tester gratuitement
+          </Link>
           <button className="md:hidden text-foreground" onClick={() => setMobileMenu(!mobileMenu)} aria-label="Menu">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {mobileMenu
@@ -246,15 +247,15 @@ export default function Index() {
                 {l.label}
               </a>
             ))}
-            <Link to="/rse" onClick={() => setMobileMenu(false)} className="block py-3 text-sm text-muted-foreground hover:text-foreground font-medium">
-              ESGScan
+            <Link to="/rse" onClick={() => setMobileMenu(false)} className="flex items-center gap-2 py-3 text-sm text-muted-foreground hover:text-foreground font-medium">
+              ESGScan <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700">Gratuit</span>
             </Link>
             <a href="#contact" onClick={() => setMobileMenu(false)} className="block py-3 text-sm text-muted-foreground hover:text-foreground font-medium">
               Contact
             </a>
-            <a href="#contact" onClick={() => setMobileMenu(false)} className="block py-3 text-sm font-semibold text-primary">
-              Prendre rendez-vous
-            </a>
+            <Link to="/rse" onClick={() => setMobileMenu(false)} className="block py-3 text-sm font-semibold text-primary">
+              Tester gratuitement
+            </Link>
           </div>
         )}
       </nav>
@@ -263,9 +264,9 @@ export default function Index() {
       <section className="pt-28 sm:pt-36 pb-16 sm:pb-24 px-5 sm:px-8 max-w-6xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
-            <a href="#produits" className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold tracking-wide uppercase animate-pulse-glow hover:bg-primary/10 transition-colors">
-              Nouveau — DecarboBat RE2020
-            </a>
+            <Link to="/rse" className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-300 bg-emerald-50 text-emerald-700 text-xs font-semibold tracking-wide uppercase animate-pulse-glow hover:bg-emerald-100 transition-colors">
+              ✦ Nouveau — ESG Scan gratuit
+            </Link>
             <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-[1.1] mt-8 text-foreground">
               Votre transition environnementale,{" "}
               <span className="gradient-text">notre engagement</span>
@@ -274,18 +275,24 @@ export default function Index() {
               La plateforme climat & environnement conçue pour les PME. Carbone, eau, bâtiment, déchets : quatre outils experts pour mesurer votre impact, vous conformer et atteindre vos objectifs — sans complexité.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mt-10">
-              <a
-                href="#produits"
+              <Link
+                to="/rse"
                 className="inline-flex items-center justify-center px-8 py-3.5 rounded-md bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity glow-sm"
               >
-                Découvrir nos solutions
-              </a>
+                Faire mon diagnostic ESG gratuit
+              </Link>
               <a
-                href="#process"
+                href="#produits"
                 className="inline-flex items-center justify-center px-8 py-3.5 rounded-md border border-border text-foreground font-semibold text-sm hover:bg-secondary transition-colors"
               >
-                Notre méthodologie
+                Découvrir nos outils
               </a>
+            </div>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mt-8 pt-8 border-t border-border">
+              <span className="text-xs text-muted-foreground font-medium">Standards couverts :</span>
+              {["GRI", "ISO 14046", "ISO 26000", "GHG Protocol", "CSRD"].map((s) => (
+                <span key={s} className="text-xs font-bold text-foreground/70">{s}</span>
+              ))}
             </div>
           </div>
           <div className="animate-float">
@@ -296,18 +303,22 @@ export default function Index() {
         </div>
       </section>
 
-      {/* CLIENTS */}
-      <section className="py-12 px-5 sm:px-8 border-y border-border bg-card">
+      {/* BARRE DE CONFIANCE */}
+      <section className="py-10 px-5 sm:px-8 border-y border-border bg-card">
         <div className="max-w-6xl mx-auto">
-          <p className="text-center text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-8">
-            Ils nous font confiance
+          <p className="text-center text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-6">
+            Standards & certifications couverts
           </p>
-          <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-5">
-            {CLIENTS.map((name) => (
-              <span key={name} className="text-sm font-semibold text-muted-foreground/60 hover:text-muted-foreground transition-colors">
+          <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-4">
+            {["GRI Standards", "ISO 14046", "ISO 26000", "GHG Protocol", "CSRD / ESRS", "RE2020", "TNFD"].map((name) => (
+              <span key={name} className="text-sm font-bold text-foreground/50 hover:text-foreground/80 transition-colors tracking-wide">
                 {name}
               </span>
             ))}
+            <span className="flex items-center gap-2 border border-primary/20 rounded-full px-4 py-1.5">
+              <img src={logoKeyconsulting} alt="Key Consulting" className="h-4 object-contain" />
+              <span className="text-xs font-semibold text-primary">Partenaire officiel</span>
+            </span>
           </div>
         </div>
       </section>
@@ -371,16 +382,16 @@ export default function Index() {
             </p>
             <div className="mt-10 grid sm:grid-cols-3 gap-6">
               <div className="border-l-2 border-primary pl-4">
+                <div className="font-heading font-extrabold text-2xl text-foreground">+50</div>
+                <div className="text-xs text-muted-foreground mt-1">PME accompagnées</div>
+              </div>
+              <div className="border-l-2 border-primary pl-4">
                 <div className="font-heading font-extrabold text-2xl text-foreground">4</div>
-                <div className="text-xs text-muted-foreground mt-1">Applications spécialisées</div>
+                <div className="text-xs text-muted-foreground mt-1">Outils certifiés</div>
               </div>
               <div className="border-l-2 border-primary pl-4">
-                <div className="font-heading font-extrabold text-2xl text-foreground">100%</div>
-                <div className="text-xs text-muted-foreground mt-1">Cloud & conforme RGPD</div>
-              </div>
-              <div className="border-l-2 border-primary pl-4">
-                <div className="font-heading font-extrabold text-2xl text-foreground">24h</div>
-                <div className="text-xs text-muted-foreground mt-1">Délai de mise en route</div>
+                <div className="font-heading font-extrabold text-2xl text-foreground">TN & MA</div>
+                <div className="text-xs text-muted-foreground mt-1">Tunisie & Maghreb</div>
               </div>
             </div>
           </div>
@@ -525,6 +536,61 @@ export default function Index() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ESG SCAN TEASER */}
+      <section className="py-16 sm:py-20 px-5 sm:px-8 bg-card border-y border-border">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold mb-6">
+              Diagnostic gratuit · 2 minutes
+            </div>
+            <h2 className="font-heading font-bold text-3xl sm:text-4xl text-foreground">
+              Où en êtes-vous sur l’ESG&nbsp;?
+            </h2>
+            <p className="text-muted-foreground mt-4 text-base leading-relaxed">
+              Obtenez un score ESG indicatif sur les 3 piliers E, S & G en 2 minutes — sans inscription. Nos experts vous contactent ensuite pour vous accompagner.
+            </p>
+            <div className="grid grid-cols-3 gap-4 mt-8">
+              {[
+                { label: "E", color: "bg-emerald-500", desc: "Environnemental" },
+                { label: "S", color: "bg-blue-500", desc: "Social" },
+                { label: "G", color: "bg-purple-500", desc: "Gouvernance" },
+              ].map((p) => (
+                <div key={p.label} className="rounded-lg border border-border bg-background p-4 text-center">
+                  <div className={`w-8 h-8 rounded-full ${p.color} text-white font-bold text-sm flex items-center justify-center mx-auto mb-2`}>{p.label}</div>
+                  <p className="text-xs text-muted-foreground">{p.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="rounded-xl border border-border bg-background p-8 shadow-sm">
+            <p className="font-heading font-bold text-lg text-foreground mb-6">3 questions pour estimer votre score</p>
+            <div className="space-y-4 mb-6">
+              {[
+                { q: "Mesurez-vous vos émissions CO₂ ?", opts: ["Oui", "En cours", "Non"] },
+                { q: "Avez-vous une politique RH ?", opts: ["Oui", "En cours", "Non"] },
+                { q: "Publiez-vous un rapport annuel ?", opts: ["Oui", "Non"] },
+              ].map((item, i) => (
+                <div key={i} className="rounded-lg border border-border p-4">
+                  <p className="text-sm font-medium text-foreground mb-3">{item.q}</p>
+                  <div className="flex gap-2 flex-wrap">
+                    {item.opts.map((opt) => (
+                      <span key={opt} className="px-3 py-1 rounded-full text-xs border border-border text-muted-foreground">{opt}</span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <Link
+              to="/rse#diagnostic"
+              className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-md bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity"
+            >
+              Faire le diagnostic complet →
+            </Link>
+            <p className="text-center text-xs text-muted-foreground mt-3">Gratuit · Aucune carte requise · Score instantané</p>
           </div>
         </div>
       </section>
