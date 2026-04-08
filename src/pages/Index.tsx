@@ -1,95 +1,96 @@
 import { useState, useEffect, useRef } from "react";
 import Header from "@/components/Header";
 import { Link } from "react-router-dom";
-import { Zap, ShieldCheck, Link2, Award, Linkedin, Send, Phone, MapPin, FileText } from "lucide-react";
+import { Zap, ShieldCheck, Link2, Award, Linkedin, Send, Phone, MapPin, FileText, 
+         LayoutDashboard, Leaf, Users, ShieldCheck as Shield, Scale, Sparkles, 
+         ArrowRight, BarChart3, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import logo from "@/assets/logo_decarbotech.png";
-import logoCarboscan from "@/assets/logo_carboscan.png";
-import logoHydroscan from "@/assets/logo_hydroscan.png";
-import logoDecarbobat from "@/assets/logo_decarbobat.png";
-import logoWastescan from "@/assets/logo_wastescan.svg";
 import logoKeyconsulting from "@/assets/logo_keyconsulting.png";
 import heroImage from "@/assets/hero_decarbonation.jpg";
 
 const NAV_LINKS = [
-  { label: "À propos", href: "#a-propos" },
-  { label: "Solutions", href: "#produits" },
+  { label: "Fonctionnalités", href: "#features" },
+  { label: "Modules", href: "#modules" },
+  { label: "Normes", href: "#normes" },
 ];
 
-const PRODUCTS = [
-  {
-    name: "CarbonScan",
-    logo: logoCarboscan,
-    tagline: "Maîtrisez votre empreinte carbone",
-    description: "Bilan carbone automatisé, suivi en temps réel des émissions Scope 1-2-3, et reporting CSRD clé en main pour vos équipes et parties prenantes.",
-    features: ["Bilan GES automatisé (Scope 1, 2 & 3)", "Reporting CSRD & GHG Protocol", "Plan de réduction personnalisé"],
-    tags: ["Bilan Carbone", "CSRD", "Scope 1-2-3"],
-    accent: "border-emerald-500",
-    accentBg: "bg-emerald-50 dark:bg-emerald-950/20",
-    accentText: "text-emerald-700 dark:text-emerald-400",
-    url: "https://carbonscan.io",
+// SaaS Features - la plateforme unifiée
+const SAAS_FEATURES = [
+  { 
+    icon: LayoutDashboard, 
+    title: "Dashboard ESG",
+    desc: "Vue d'ensemble de vos scores E/S/G avec indicateurs clés et priorités d'action",
+    color: "text-emerald-600",
+    bg: "bg-emerald-50"
   },
-  {
-    name: "HydroScan",
-    logo: logoHydroscan,
-    tagline: "Pilotez votre consommation d'eau",
-    description: "Monitoring continu de l'empreinte eau, détection automatique des fuites et anomalies, conformité réglementaire sur l'ensemble de vos sites industriels.",
-    features: ["Monitoring eau en temps réel", "Détection de fuites & anomalies", "Conformité réglementaire multi-sites"],
-    tags: ["Empreinte Eau", "Monitoring", "Conformité"],
-    accent: "border-blue-500",
-    accentBg: "bg-blue-50 dark:bg-blue-950/20",
-    accentText: "text-blue-700 dark:text-blue-400",
-    url: "https://hydroscan.io",
+  { 
+    icon: Leaf, 
+    title: "Module Environnement",
+    desc: "Bilan carbone, eau, biodiversité, déchets et économie circulaire",
+    color: "text-green-600",
+    bg: "bg-green-50"
   },
-  {
-    name: "DecarboBat",
-    logo: logoDecarbobat,
-    tagline: "Décarbonez votre parc immobilier",
-    description: "Simulation énergétique des bâtiments, vérification de la conformité RE2020 et suivi complet des projets de rénovation bas carbone.",
-    features: ["Simulation énergétique RE2020", "Suivi des rénovations bas carbone", "Diagnostic & plan d'action bâtiment"],
-    tags: ["Bâtiment", "RE2020", "Rénovation"],
-    accent: "border-orange-500",
-    accentBg: "bg-orange-50 dark:bg-orange-950/20",
-    accentText: "text-orange-700 dark:text-orange-400",
-    url: "https://decarbobat.com",
+  { 
+    icon: Users, 
+    title: "Module Social", 
+    desc: "RH, diversité, dialogue social, santé/sécurité et formation",
+    color: "text-blue-600",
+    bg: "bg-blue-50"
   },
-  {
-    name: "WasteScan",
-    logo: logoWastescan,
-    tagline: "Maîtrisez vos déchets et votre économie circulaire",
-    description: "Suivi des flux de déchets industriels, conformité réglementaire et pilotage de votre transition vers l'économie circulaire sur l'ensemble de vos sites.",
-    features: ["Cartographie & suivi des flux de déchets", "Conformité réglementaire déchets industriels", "Plan d'action économie circulaire"],
-    tags: ["Déchets", "Économie circulaire", "Conformité"],
-    accent: "border-purple-300",
-    accentBg: "bg-purple-50 dark:bg-purple-950/20",
-    accentText: "text-purple-400",
-    url: "https://wastescan.io",
-    comingSoon: true,
+  { 
+    icon: Shield, 
+    title: "Module Gouvernance",
+    desc: "Éthique, conformité, lanceurs d'alerte et board ESG",
+    color: "text-violet-600",
+    bg: "bg-violet-50"
   },
+  { 
+    icon: Scale, 
+    title: "Conformité Normes",
+    desc: "Self-assessment ESRS, GRI, ISSB, SASB, TCFD avec tracking des exigences",
+    color: "text-amber-600",
+    bg: "bg-amber-50"
+  },
+  { 
+    icon: Sparkles, 
+    title: "Plan d'Action IA",
+    desc: "Génération automatique de plans de conformité personnalisés avec OpenAI",
+    color: "text-purple-600",
+    bg: "bg-purple-50"
+  },
+];
+
+// Standards couverts
+const STANDARDS = [
+  { name: "ESRS", full: "European Sustainability Reporting Standards", type: "Mandatory EU", materiality: "Double" },
+  { name: "GRI", full: "Global Reporting Initiative", type: "Volontaire", materiality: "Impact" },
+  { name: "ISSB", full: "IFRS S1 & S2", type: "Investor-focused", materiality: "Financial" },
+  { name: "SASB", full: "Sustainability Accounting", type: "Sectoriel", materiality: "Financial" },
+  { name: "TCFD", full: "Task Force Climate", type: "Consolidé ISSB", materiality: "Financial" },
+  { name: "CSRD", full: "Corporate Sustainability Reporting", type: "Directive EU", materiality: "Double" },
 ];
 
 const FEATURES = [
-  { Icon: Zap, title: "Données temps réel", desc: "Synchronisation continue avec vos systèmes existants pour des mesures toujours à jour." },
-  { Icon: ShieldCheck, title: "Sécurité souveraine", desc: "Hébergement européen, chiffrement de bout en bout, conformité RGPD." },
-  { Icon: Link2, title: "Intégration native", desc: "API REST et connecteurs ERP, CRM, comptabilité prêts à l'emploi." },
-  { Icon: FileText, title: "Rapport GRI automatisé", desc: "Vos données génèrent automatiquement un rapport GRI prêt à soumettre à vos partenaires et investisseurs." },
+  { Icon: Zap, title: "Données centralisées", desc: "Tous vos indicateurs ESG dans un seul dashboard — fini les silos." },
+  { Icon: ShieldCheck, title: "Conformité garantie", desc: "Mapping automatique vers ESRS, GRI et ISSB. Reports prêts pour audit." },
+  { Icon: Sparkles, title: "IA générative", desc: "Plan d'action personnalisé généré par IA selon votre profil et normes visées." },
+  { Icon: FileText, title: "Export rapports", desc: "Exportez vos rapports de conformité et dashboards en PDF/Excel." },
 ];
 
 const STATS = [
-  { label: "Tonnes CO₂ évitées", value: "2.4M+", pct: 85 },
-  { label: "Entreprises clientes", value: "340+", pct: 70 },
-  { label: "Pays couverts", value: "28", pct: 55 },
-  { label: "Précision des mesures", value: "99.2%", pct: 99 },
+  { label: "Exigences trackées", value: "100+", pct: 95 },
+  { label: "Standards couverts", value: "6", pct: 100 },
+  { label: "Modules ESG", value: "3", pct: 100 },
+  { label: "Score moyen users", value: "78%", pct: 78 },
 ];
 
 const STEPS = [
-  { num: "01", title: "Connectez", desc: "Intégrez vos sources de données en quelques clics via nos connecteurs certifiés." },
-  { num: "02", title: "Mesurez", desc: "Notre moteur analyse automatiquement vos indicateurs environnementaux en continu." },
-  { num: "03", title: "Réduisez", desc: "Recevez des recommandations personnalisées pour diminuer votre impact environnemental." },
-  { num: "04", title: "Reportez", desc: "Générez des rapports conformes et communiquez vos progrès aux parties prenantes." },
+  { num: "01", title: "Inscrivez-vous", desc: "Créez votre compte en 30 secondes et configurez votre organisation." },
+  { num: "02", title: "Renseignez vos données", desc: "Remplissez les modules E, S et G avec vos pratiques actuelles." },
+  { num: "03", title: "Obtenez votre score", desc: "Visualisez votre maturité ESG et identifiez les axes d'amélioration." },
+  { num: "04", title: "Générez votre plan", desc: "L'IA crée un plan d'action priorisé pour atteindre la conformité." },
 ];
-
-const CLIENTS = ["Groupe Meridia", "IndustriaPlus", "BâtiVerde", "EcoLogis", "ThermiGroup", "AquaRéseau"];
 
 function useScrollVisible(threshold = 0.2) {
   const ref = useRef<HTMLDivElement>(null);
@@ -202,40 +203,41 @@ export default function Index() {
       <section className="pt-28 sm:pt-36 pb-16 sm:pb-24 px-5 sm:px-8 max-w-6xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
-            <Link to="/rse" className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-300 bg-emerald-50 text-emerald-700 text-xs font-semibold tracking-wide uppercase animate-pulse-glow hover:bg-emerald-100 transition-colors">
-              ✦ Nouveau — ESG Scan gratuit
+            <Link to="/auth" className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-300 bg-emerald-50 text-emerald-700 text-xs font-semibold tracking-wide uppercase animate-pulse-glow hover:bg-emerald-100 transition-colors">
+              ✦ Inscription gratuite — Sans engagement
             </Link>
             <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-[1.1] mt-8 text-foreground">
-              Votre transition environnementale,{" "}
-              <span className="gradient-text">notre engagement</span>
+              Votre plateforme ESG{" "}
+              <span className="gradient-text">tout-en-un</span>
             </h1>
             <p className="text-muted-foreground text-lg sm:text-xl mt-6 leading-relaxed max-w-2xl">
-              La plateforme climat & environnement conçue pour les PME. Carbone, eau, bâtiment, déchets : quatre outils experts pour mesurer votre impact, vous conformer et atteindre vos objectifs — sans complexité.
+              Mesurez, pilotez et reportez vos performances ESG. Conformité CSRD, GRI, ISSB — dashboard, modules E/S/G et plan d'action IA dans une seule application web.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mt-10">
               <Link
-                to="/rse"
+                to="/auth"
                 className="inline-flex items-center justify-center px-8 py-3.5 rounded-md bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity glow-sm"
               >
-                Faire mon diagnostic ESG gratuit
+                <LayoutDashboard className="w-4 h-4 mr-2" />
+                Démarrer gratuitement
               </Link>
-              <a
-                href="#produits"
+              <Link
+                to="/rse"
                 className="inline-flex items-center justify-center px-8 py-3.5 rounded-md border border-border text-foreground font-semibold text-sm hover:bg-secondary transition-colors"
               >
-                Découvrir nos outils
-              </a>
+                Faire le diagnostic ESG
+              </Link>
             </div>
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mt-8 pt-8 border-t border-border">
               <span className="text-xs text-muted-foreground font-medium">Standards couverts :</span>
-              {["GRI", "ISO 14046", "ISO 26000", "GHG Protocol", "CSRD"].map((s) => (
+              {["ESRS", "GRI", "ISSB", "SASB", "TCFD", "CSRD"].map((s) => (
                 <span key={s} className="text-xs font-bold text-foreground/70">{s}</span>
               ))}
             </div>
           </div>
           <div className="animate-float">
-            <div className="rounded-xl overflow-hidden shadow-lg animate-hero-in">
-              <img src={heroImage} alt="Ville durable avec panneaux solaires et espaces verts" className="w-full h-auto object-cover" width={1280} height={720} fetchPriority="high" />
+            <div className="rounded-xl overflow-hidden shadow-lg animate-hero-in border border-border">
+              <img src={heroImage} alt="Dashboard ESG DecarboTech" className="w-full h-auto object-cover" width={1280} height={720} fetchPriority="high" />
             </div>
           </div>
         </div>
@@ -245,17 +247,17 @@ export default function Index() {
       <section className="py-10 px-5 sm:px-8 border-y border-border bg-card">
         <div className="max-w-6xl mx-auto">
           <p className="text-center text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-6">
-            Standards & certifications couverts
+            Standards ESG couverts
           </p>
           <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-4">
-            {["GRI Standards", "ISO 14046", "ISO 26000", "GHG Protocol", "CSRD / ESRS", "RE2020", "TNFD"].map((name) => (
+            {["ESRS (CSRD)", "GRI Standards", "ISSB / IFRS S1-S2", "SASB", "TCFD", "GHG Protocol"].map((name) => (
               <span key={name} className="text-sm font-bold text-foreground/50 hover:text-foreground/80 transition-colors tracking-wide">
                 {name}
               </span>
             ))}
             <span className="flex items-center gap-2 border border-primary/20 rounded-full px-4 py-1.5">
               <img src={logoKeyconsulting} alt="Key Consulting" className="h-4 object-contain" />
-              <span className="text-xs font-semibold text-primary">Partenaire officiel</span>
+              <span className="text-xs font-semibold text-primary">Partenaire GRI/CSRD</span>
             </span>
           </div>
         </div>
@@ -366,111 +368,78 @@ export default function Index() {
         </div>
       </section>
 
-      {/* PRODUITS */}
-      <section id="produits" className="py-16 sm:py-24 px-5 sm:px-8 bg-card">
+      {/* MODULES SaaS */}
+      <section id="modules" className="py-16 sm:py-24 px-5 sm:px-8 bg-card">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
             <div>
-              <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Nos Applications</p>
+              <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Votre plateforme ESG</p>
               <h2 className="font-heading font-bold text-3xl sm:text-4xl text-foreground">
-                Quatre plateformes spécialisées,<br className="hidden sm:block" /> un seul objectif
+                Une plateforme, tous vos enjeux ESG
               </h2>
             </div>
             <p className="text-sm text-muted-foreground max-w-xs leading-relaxed">
-              Carbone, eau, bâtiment, déchets : une couverture complète des enjeux climat & environnement, accessible à toutes les PME.
+              Dashboard unifié avec modules Environnement, Social, Gouvernance, Conformité normes et Plan d'action IA.
             </p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {PRODUCTS.map((p) => (
-              <div key={p.name} className={`group rounded-xl border-t-4 ${p.accent} border-x border-b border-border flex flex-col overflow-hidden ${'comingSoon' in p && p.comingSoon ? 'bg-muted/40 opacity-70' : 'bg-background card-hover'}`}>
-                <div className="p-8 flex-1 flex flex-col">
-                  <div className="flex items-start justify-between mb-6">
-                    {p.logo
-                      ? <img src={p.logo} alt={p.name} className={`h-10 object-contain ${'comingSoon' in p && p.comingSoon ? 'grayscale' : ''}`} loading="lazy" />
-                      : <span className={`font-heading font-extrabold text-lg tracking-tight ${p.accentText}`}>{p.name}</span>
-                    }
-                    {'comingSoon' in p && p.comingSoon
-                      ? <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-muted text-muted-foreground">Bientôt</span>
-                      : <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${p.accentBg} ${p.accentText}`}>SaaS</span>
-                    }
-                  </div>
-                  <p className={`text-xs font-semibold uppercase tracking-wider ${p.accentText} mb-2`}>{p.tagline}</p>
-                  <h3 className="font-heading font-bold text-2xl text-foreground mb-4">{p.name}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-6">{p.description}</p>
-                  <ul className="space-y-2.5 mb-8">
-                    {p.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2.5 text-sm text-muted-foreground">
-                        <svg className="w-4 h-4 mt-0.5 shrink-0 text-muted-foreground/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-auto">
-                    {'comingSoon' in p && p.comingSoon
-                      ? <span className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground cursor-not-allowed">
-                          En cours de développement…
-                        </span>
-                      : <a
-                          href={p.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`inline-flex items-center gap-2 text-sm font-semibold ${p.accentText} hover:underline`}
-                        >
-                          Découvrir {p.name}
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 17L17 7M17 7H7M17 7v10" />
-                          </svg>
-                        </a>
-                    }
-                  </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {SAAS_FEATURES.map((feature) => (
+              <div key={feature.title} className="group rounded-xl border border-border bg-background p-6 card-hover">
+                <div className={`w-12 h-12 rounded-xl ${feature.bg} flex items-center justify-center mb-4`}>
+                  <feature.icon className={`w-6 h-6 ${feature.color}`} />
                 </div>
+                <h3 className="font-heading font-bold text-lg text-foreground mb-2">{feature.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{feature.desc}</p>
               </div>
             ))}
+          </div>
+          <div className="mt-10 text-center">
+            <Link
+              to="/auth"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-md bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity glow-sm"
+            >
+              <LayoutDashboard className="w-4 h-4" />
+              Accéder à la plateforme
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* GRI CALLOUT */}
-      <section className="py-16 sm:py-20 px-5 sm:px-8 bg-primary">
+      {/* STANDARDS CALLOUT */}
+      <section id="normes" className="py-16 sm:py-20 px-5 sm:px-8 bg-primary">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-10 items-center">
             <div>
-              <p className="text-xs font-semibold tracking-widest uppercase text-primary-foreground/60 mb-3">Rapport GRI</p>
+              <p className="text-xs font-semibold tracking-widest uppercase text-primary-foreground/60 mb-3">Conformité multi-standards</p>
               <h2 className="font-heading font-bold text-3xl sm:text-4xl text-primary-foreground">
-                Vos données DecarboTech → rapport GRI en un clic
+                Un seul outil, tous les standards ESG
               </h2>
               <p className="text-primary-foreground/80 mt-5 text-base leading-relaxed">
-                Vos clients, investisseurs et donneurs d’ordre exigent un rapport GRI ? Toutes vos mesures environnementales sont automatiquement formatées selon les standards GRI — prêtes à soumettre, sans ressaisie.
+                ESRS (CSRD), GRI, ISSB, SASB, TCFD — notre module Conformité vous permet d'évaluer votre adhérence à chaque exigence, de suivre votre progression et de générer des rapports d'audit prêts pour vos parties prenantes.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-                <a
-                  href="#contact"
+                <Link
+                  to="/auth"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-primary-foreground text-primary font-semibold text-sm hover:opacity-90 transition-opacity"
                 >
-                  <FileText className="w-4 h-4" />
-                  Demander une démo GRI
-                </a>
+                  <Scale className="w-4 h-4" />
+                  Tester la conformité
+                </Link>
                 <div className="flex items-center gap-2 px-4 py-2.5 rounded-md bg-primary-foreground/10 border border-primary-foreground/20">
                   <div className="w-2 h-2 rounded-full bg-green-400 shrink-0" />
                   <span className="text-xs text-primary-foreground/90 font-medium">
-                    En partenariat avec <span className="font-bold">Key Consulting Tunisie</span>
+                    100+ exigences trackées
                   </span>
                 </div>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              {[
-                { code: "GRI 302", label: "Énergie", app: "DecarboBat" },
-                { code: "GRI 303", label: "Eau", app: "HydroScan" },
-                { code: "GRI 305", label: "Émissions", app: "CarbonScan" },
-                { code: "GRI 306", label: "Déchets", app: "WasteScan" },
-              ].map((g) => (
-                <div key={g.code} className="rounded-lg bg-primary-foreground/10 border border-primary-foreground/20 p-5">
-                  <div className="text-xs font-bold text-primary-foreground/60 mb-1">{g.code}</div>
-                  <div className="font-heading font-bold text-lg text-primary-foreground">{g.label}</div>
-                  <div className="text-xs text-primary-foreground/60 mt-1">→ {g.app}</div>
+              {STANDARDS.map((s) => (
+                <div key={s.name} className="rounded-lg bg-primary-foreground/10 border border-primary-foreground/20 p-5">
+                  <div className="text-xs font-bold text-primary-foreground/60 mb-1">{s.type}</div>
+                  <div className="font-heading font-bold text-lg text-primary-foreground">{s.name}</div>
+                  <div className="text-xs text-primary-foreground/60 mt-1">{s.materiality} materiality</div>
                 </div>
               ))}
             </div>
@@ -647,15 +616,14 @@ export default function Index() {
             </div>
           </div>
           <div>
-            <h4 className="font-heading font-bold text-sm text-card-foreground mb-4">Applications</h4>
+            <h4 className="font-heading font-bold text-sm text-card-foreground mb-4">Plateforme</h4>
             <ul className="space-y-3">
-              {PRODUCTS.map((p) => (
-                <li key={p.name}>
-                  <a href={p.url} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                    {p.name}
-                  </a>
-                </li>
-              ))}
+              <li><Link to="/app" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Dashboard ESG</Link></li>
+              <li><Link to="/app/environnement" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Module Environnement</Link></li>
+              <li><Link to="/app/social" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Module Social</Link></li>
+              <li><Link to="/app/gouvernance" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Module Gouvernance</Link></li>
+              <li><Link to="/app/conformite" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Conformité Normes</Link></li>
+              <li><Link to="/app/plan-action" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Plan d'Action IA</Link></li>
             </ul>
           </div>
           <div>
