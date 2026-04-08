@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "@/assets/logo_decarbotech.png";
+import { useAuth } from "@/contexts/AuthContext";
 import logoCarboscan from "@/assets/logo_carboscan.png";
 import logoHydroscan from "@/assets/logo_hydroscan.png";
 import logoWastescan from "@/assets/logo_wastescan.svg";
