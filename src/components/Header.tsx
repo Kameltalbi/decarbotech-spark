@@ -142,8 +142,21 @@ export default function Header() {
           <Link to="/rse"
             className="px-4 py-2 rounded-md border-2 border-primary text-primary text-sm font-semibold hover:bg-primary hover:text-primary-foreground transition-all inline-flex items-center gap-1.5">
             Diagnostic ESG
-            <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700">Gratuit</span>
+            <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-secondary text-secondary-foreground">Gratuit</span>
           </Link>
+          {user ? (
+            <button
+              onClick={async () => { await signOut(); navigate("/"); }}
+              className="px-4 py-2 rounded-md bg-muted text-foreground text-sm font-semibold hover:bg-muted/80 transition-colors"
+            >
+              Déconnexion
+            </button>
+          ) : (
+            <Link to="/auth"
+              className="px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-opacity">
+              Connexion
+            </Link>
+          )}
         </div>
 
         {/* Mobile burger */}
@@ -204,8 +217,21 @@ export default function Header() {
           <Link to="/rse" onClick={close}
             className="flex items-center gap-2 py-3 text-sm font-semibold text-primary">
             Diagnostic ESG
-            <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700">Gratuit</span>
+            <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-secondary text-secondary-foreground">Gratuit</span>
           </Link>
+          {user ? (
+            <button
+              onClick={async () => { await signOut(); navigate("/"); close(); }}
+              className="w-full py-3 text-sm font-semibold text-foreground bg-muted rounded-md hover:bg-muted/80 transition-colors"
+            >
+              Déconnexion
+            </button>
+          ) : (
+            <Link to="/auth" onClick={close}
+              className="block py-3 text-sm font-semibold text-center text-primary-foreground bg-primary rounded-md hover:opacity-90 transition-opacity">
+              Connexion
+            </Link>
+          )}
         </div>
       )}
     </nav>
