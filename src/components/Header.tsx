@@ -44,7 +44,7 @@ export default function Header() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
-  const isRSE = pathname.startsWith("/rse");
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -139,11 +139,11 @@ export default function Header() {
             className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">
             Contact
           </a>
-          <Link to="/rse"
+          <a href={isHome ? "#diagnostic" : "/#diagnostic"}
             className="px-4 py-2 rounded-md border-2 border-primary text-primary text-sm font-semibold hover:bg-primary hover:text-primary-foreground transition-all inline-flex items-center gap-1.5">
             Diagnostic ESG
             <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-secondary text-secondary-foreground">Gratuit</span>
-          </Link>
+          </a>
           {user ? (
             <div className="flex items-center gap-2">
               <Link to="/app"
@@ -220,11 +220,11 @@ export default function Header() {
             className="block py-3 text-sm text-muted-foreground hover:text-foreground font-medium">
             Contact
           </a>
-          <Link to="/rse" onClick={close}
+          <a href="/#diagnostic" onClick={close}
             className="flex items-center gap-2 py-3 text-sm font-semibold text-primary">
             Diagnostic ESG
             <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-secondary text-secondary-foreground">Gratuit</span>
-          </Link>
+          </a>
           {user ? (
             <div className="space-y-2 pt-2">
               <Link to="/app" onClick={close}

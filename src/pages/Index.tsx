@@ -3,7 +3,7 @@ import Header from "@/components/Header";
 import { Link } from "react-router-dom";
 import { Zap, ShieldCheck, Link2, Award, Linkedin, Send, Phone, MapPin, FileText, 
          LayoutDashboard, Leaf, Users, ShieldCheck as Shield, Scale, Sparkles, 
-         ArrowRight, BarChart3, CheckCircle2 } from "lucide-react";
+         ArrowRight, BarChart3, CheckCircle2, Check, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import logo from "@/assets/logo_decarbotech.png";
 import logoKeyconsulting from "@/assets/logo_keyconsulting.png";
@@ -12,8 +12,59 @@ import heroImage from "@/assets/hero_decarbonation.jpg";
 const NAV_LINKS = [
   { label: "Fonctionnalités", href: "#features" },
   { label: "Modules", href: "#modules" },
+  { label: "Diagnostic", href: "#diagnostic" },
   { label: "Normes", href: "#normes" },
 ];
+
+// Diagnostic ESG questions
+const PILLAR_META = {
+  E: { label: "Environnemental", color: "#16a34a", bg: "bg-emerald-50", border: "border-emerald-200", text: "text-emerald-700", gri: "GRI 302, 303, 305, 306" },
+  S: { label: "Social",          color: "#2563eb", bg: "bg-blue-50",    border: "border-blue-200",    text: "text-blue-700",    gri: "GRI 401, 403, 404, 405" },
+  G: { label: "Gouvernance",     color: "#7c3aed", bg: "bg-purple-50",  border: "border-purple-200",  text: "text-purple-700",  gri: "GRI 205, 206, 207, 418" },
+};
+
+type EsgOption = { label: string; pts: number };
+type EsgQuestion = { id: string; pillar: "E" | "S" | "G"; question: string; context?: string; options: EsgOption[] };
+
+const ESG_QUESTIONS: EsgQuestion[] = [
+  { id: "e1", pillar: "E", question: "Réalisez-vous un bilan carbone selon le GHG Protocol ?", context: "Scope 1, 2 & 3", options: [{ label: "Oui — Scopes 1, 2 & 3 mesurés annuellement", pts: 4 }, { label: "Partiellement — Scopes 1 & 2", pts: 2 }, { label: "En cours", pts: 1 }, { label: "Non", pts: 0 }] },
+  { id: "e2", pillar: "E", question: "Disposez-vous d'objectifs chiffrés de réduction des émissions ?", options: [{ label: "Oui — alignés SBTi", pts: 4 }, { label: "Objectifs internes", pts: 2 }, { label: "En cours", pts: 1 }, { label: "Non", pts: 0 }] },
+  { id: "e3", pillar: "E", question: "Mesurez-vous et gérez-vous votre consommation d'eau ?", options: [{ label: "Monitoring continu + plan", pts: 4 }, { label: "Suivi partiel", pts: 2 }, { label: "En cours", pts: 1 }, { label: "Non", pts: 0 }] },
+  { id: "e4", pillar: "E", question: "Gérez-vous vos déchets selon l'économie circulaire ?", options: [{ label: "Politique formalisée", pts: 4 }, { label: "Actions en cours", pts: 2 }, { label: "Conformité minimale", pts: 1 }, { label: "Non", pts: 0 }] },
+  { id: "e5", pillar: "E", question: "Certification environnementale (ISO 14001, etc.) ?", options: [{ label: "Certifié", pts: 4 }, { label: "En cours", pts: 2 }, { label: "Politique sans certif", pts: 1 }, { label: "Non", pts: 0 }] },
+  { id: "s1", pillar: "S", question: "Évaluez-vous la satisfaction et bien-être des employés ?", options: [{ label: "Enquête annuelle + plan", pts: 4 }, { label: "Ponctuellement", pts: 2 }, { label: "En cours", pts: 1 }, { label: "Non", pts: 0 }] },
+  { id: "s2", pillar: "S", question: "Politique de diversité, équité et inclusion (DEI) ?", options: [{ label: "Politique + indicateurs", pts: 4 }, { label: "Politique sans indicateurs", pts: 2 }, { label: "En cours", pts: 1 }, { label: "Non", pts: 0 }] },
+  { id: "s3", pillar: "S", question: "Gestion santé et sécurité au travail (SST) ?", options: [{ label: "ISO 45001 certifié", pts: 4 }, { label: "Plan SST suivi", pts: 2 }, { label: "Conformité légale", pts: 1 }, { label: "Non", pts: 0 }] },
+  { id: "s4", pillar: "S", question: "Programmes de formation et développement ?", options: [{ label: "Budget + plan annuel", pts: 4 }, { label: "Formations ponctuelles", pts: 2 }, { label: "Obligatoires uniquement", pts: 1 }, { label: "Non", pts: 0 }] },
+  { id: "s5", pillar: "S", question: "Évaluez-vous les pratiques ESG de vos fournisseurs ?", options: [{ label: "Audit systématique", pts: 4 }, { label: "Questionnaire RSE", pts: 2 }, { label: "En cours", pts: 1 }, { label: "Non", pts: 0 }] },
+  { id: "g1", pillar: "G", question: "Publiez-vous un rapport de durabilité/RSE ?", options: [{ label: "Rapport GRI certifié", pts: 4 }, { label: "Rapport interne", pts: 2 }, { label: "Quelques éléments", pts: 1 }, { label: "Non", pts: 0 }] },
+  { id: "g2", pillar: "G", question: "Code d'éthique et politique anti-corruption ?", options: [{ label: "Formalisé + formation", pts: 4 }, { label: "Code sans signalement", pts: 2 }, { label: "En cours", pts: 1 }, { label: "Non", pts: 0 }] },
+  { id: "g3", pillar: "G", question: "Les enjeux ESG sont-ils intégrés dans votre stratégie ?", options: [{ label: "KPIs au conseil", pts: 4 }, { label: "Direction opérationnelle", pts: 2 }, { label: "En réflexion", pts: 1 }, { label: "Non", pts: 0 }] },
+  { id: "g4", pillar: "G", question: "Analyse des risques ESG (physiques et transition) ?", options: [{ label: "Analyse formelle", pts: 4 }, { label: "Partielle", pts: 2 }, { label: "En cours", pts: 1 }, { label: "Non", pts: 0 }] },
+  { id: "g5", pillar: "G", question: "Consultez-vous régulièrement vos parties prenantes ?", options: [{ label: "Processus formalisé", pts: 4 }, { label: "Ponctuellement", pts: 2 }, { label: "Informel", pts: 1 }, { label: "Non", pts: 0 }] },
+];
+
+type Answers = Record<string, number>;
+
+function calcScorePro(answers: Answers) {
+  const byPillar = (p: "E" | "S" | "G") => {
+    const qs = ESG_QUESTIONS.filter((q) => q.pillar === p);
+    const total = qs.reduce((acc, q) => acc + (answers[q.id] ?? 0), 0);
+    return Math.round((total / (qs.length * 4)) * 100);
+  };
+  const e = byPillar("E"), s = byPillar("S"), g = byPillar("G");
+  const global = Math.round((e + s + g) / 3);
+  const gaps: { pillar: "E"|"S"|"G"; label: string; reco: string }[] = [];
+  if (e < 50) gaps.push({ pillar: "E", label: "Environnemental", reco: "Démarrez par un bilan carbone GHG Protocol." });
+  if (s < 50) gaps.push({ pillar: "S", label: "Social", reco: "Mettez en place une politique DEI et ISO 45001." });
+  if (g < 50) gaps.push({ pillar: "G", label: "Gouvernance", reco: "Publiez un rapport GRI et formalisez risques ESG." });
+  const maturity =
+    global >= 75 ? { label: "Leader ESG", desc: "Démarche avancée. Passez au niveau supérieur avec notre plateforme." } :
+    global >= 55 ? { label: "En progression", desc: "Bases solides. Formalisez avec notre accompagnement." } :
+    global >= 35 ? { label: "En construction", desc: "Actions engagées. Un plan d'action structuré vous attend." } :
+                   { label: "Débutant", desc: "C'est le moment de poser des bases solides." };
+  return { e, s, g, global, gaps, maturity };
+}
 
 // SaaS Features - la plateforme unifiée
 const SAAS_FEATURES = [
@@ -595,7 +646,20 @@ export default function Index() {
         </div>
       </section>
 
-      {/* FOOTER */}
+      {/* DIAGNOSTIC ESG */}
+      <section id="diagnostic" className="py-16 sm:py-24 px-5 sm:px-8 bg-card border-y border-border">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Diagnostic rapide</p>
+            <h2 className="font-heading font-bold text-3xl sm:text-4xl text-foreground">Testez votre maturité ESG</h2>
+            <p className="text-muted-foreground mt-3 text-base max-w-xl mx-auto">15 questions couvrant les piliers E, S & G. Obtenez votre score instantanément et découvrez vos priorités.</p>
+          </div>
+          <div className="bg-background rounded-2xl border border-border p-6 sm:p-10 shadow-sm">
+            <DiagnosticSection />
+          </div>
+        </div>
+      </section>
+
       <footer className="border-t border-border py-16 px-5 sm:px-8 bg-card">
         <div className="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-12">
           <div>
@@ -636,11 +700,6 @@ export default function Index() {
                   </a>
                 </li>
               ))}
-              <li>
-                <Link to="/rse" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  RSE & ESG
-                </Link>
-              </li>
             </ul>
           </div>
           <div>
@@ -660,6 +719,147 @@ export default function Index() {
           </div>
         </div>
       </footer>
+    </div>
+  );
+}
+
+// Diagnostic components
+function GaugeSVG({ value, color, label, delay = 0 }: { value: number; color: string; label: string; delay?: number }) {
+  const [animated, setAnimated] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setAnimated(true), 200 + delay);
+    return () => clearTimeout(t);
+  }, [delay]);
+  const r = 15.9155;
+  const circ = 2 * Math.PI * r;
+  const dash = animated ? (value / 100) * circ : 0;
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <div className="relative w-20 h-20">
+        <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
+          <circle cx="18" cy="18" r={r} fill="none" stroke="#e5e7eb" strokeWidth="3" />
+          <circle cx="18" cy="18" r={r} fill="none" stroke={color} strokeWidth="3"
+            strokeDasharray={`${dash} ${circ}`} strokeLinecap="round"
+            style={{ transition: "stroke-dasharray 1.4s cubic-bezier(0.22,1,0.36,1)" }} />
+        </svg>
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <span className="font-bold text-base text-foreground">{animated ? value : 0}</span>
+        </div>
+      </div>
+      <span className="text-xs font-semibold text-foreground">{label}</span>
+    </div>
+  );
+}
+
+function DiagnosticSection() {
+  const [step, setStep] = useState(0);
+  const [answers, setAnswers] = useState<Answers>({});
+  const [selected, setSelected] = useState<number | null>(null);
+  const [score, setScore] = useState<ReturnType<typeof calcScorePro> | null>(null);
+
+  const q = ESG_QUESTIONS[step];
+  const meta = PILLAR_META[q.pillar];
+  const pillarStart = ESG_QUESTIONS.findIndex((x) => x.pillar === q.pillar);
+  const pillarIdx = step - pillarStart + 1;
+  const pillarTotal = ESG_QUESTIONS.filter((x) => x.pillar === q.pillar).length;
+
+  const confirm = () => {
+    if (selected === null) return;
+    const next = { ...answers, [q.id]: q.options[selected].pts };
+    setAnswers(next);
+    setSelected(null);
+    if (step < ESG_QUESTIONS.length - 1) {
+      setStep((s) => s + 1);
+    } else {
+      setScore(calcScorePro(next));
+    }
+  };
+
+  const restart = () => { setStep(0); setAnswers({}); setSelected(null); setScore(null); };
+
+  if (score) {
+    return (
+      <div className="max-w-2xl mx-auto">
+        <div className="text-center mb-8">
+          <p className="font-heading font-bold text-2xl text-foreground">
+            Score ESG global : <span className="text-primary">{score.global}/100</span>
+          </p>
+          <p className="text-sm text-muted-foreground mt-1">{score.maturity.label}</p>
+        </div>
+        <div className="flex justify-center gap-8 mb-8">
+          <GaugeSVG value={score.e} color={PILLAR_META.E.color} label="Environnement" delay={0} />
+          <GaugeSVG value={score.s} color={PILLAR_META.S.color} label="Social" delay={250} />
+          <GaugeSVG value={score.g} color={PILLAR_META.G.color} label="Gouvernance" delay={500} />
+        </div>
+        <div className="rounded-lg border border-primary/20 bg-primary/5 p-5 mb-6 text-sm">
+          <p className="font-semibold text-foreground mb-1">{score.maturity.label}</p>
+          <p className="text-muted-foreground">{score.maturity.desc}</p>
+        </div>
+        {score.gaps.length > 0 && (
+          <div className="space-y-3 mb-6">
+            <p className="text-xs font-bold uppercase tracking-wider">Priorités d'amélioration</p>
+            {score.gaps.map((g) => {
+              const m = PILLAR_META[g.pillar];
+              return (
+                <div key={g.pillar} className={`rounded-lg border ${m.border} ${m.bg} p-4`}>
+                  <p className={`text-xs font-bold mb-1 ${m.text}`}>Pilier {g.pillar} — {g.label}</p>
+                  <p className="text-xs text-foreground">{g.reco}</p>
+                </div>
+              );
+            })}
+          </div>
+        )}
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Link to="/auth" className="flex-1 inline-flex items-center justify-center gap-2 py-3 rounded-md bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90">
+            Accéder à la plateforme →
+          </Link>
+          <button onClick={restart} className="inline-flex items-center justify-center gap-2 py-3 px-5 rounded-md border border-border text-sm font-semibold hover:bg-secondary">
+            Recommencer
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-2xl mx-auto">
+      <div className="flex items-center gap-2 mb-4">
+        <div className="flex-1 h-2 rounded-full bg-secondary overflow-hidden">
+          <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${(step / ESG_QUESTIONS.length) * 100}%` }} />
+        </div>
+        <span className="text-xs text-muted-foreground">{step + 1}/{ESG_QUESTIONS.length}</span>
+      </div>
+      <div className="flex items-center gap-4 mb-6">
+        {(["E", "S", "G"] as const).map((p) => {
+          const m = PILLAR_META[p];
+          const active = q.pillar === p;
+          const done = (p === "E" && step >= 5) || (p === "S" && step >= 10);
+          return (
+            <div key={p} className={`flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-semibold ${active ? `${m.bg} ${m.border} ${m.text}` : done ? "bg-muted border-border text-muted-foreground" : "border-border text-muted-foreground"}`}>
+              <span>{p}</span>
+              {active && <span className="opacity-60">{pillarIdx}/{pillarTotal}</span>}
+            </div>
+          );
+        })}
+      </div>
+      <p className={`text-xs font-bold uppercase tracking-wider mb-2 ${meta.text}`}>Pilier {q.pillar} — {meta.label}</p>
+      <h3 className="font-heading font-bold text-xl text-foreground mb-2">{q.question}</h3>
+      {q.context && <p className="text-xs text-muted-foreground mb-5 italic">{q.context}</p>}
+      <div className="space-y-2 mb-6">
+        {q.options.map((opt, i) => (
+          <button key={i} onClick={() => setSelected(i)}
+            className={`w-full text-left px-5 py-4 rounded-lg border-2 text-sm transition-all flex items-start gap-3 ${selected === i ? `${meta.bg} ${meta.border} font-semibold` : "border-border hover:border-primary/40"}`}>
+            <span className={`mt-0.5 w-4 h-4 rounded-full border-2 shrink-0 flex items-center justify-center ${selected === i ? `${meta.border}` : "border-muted-foreground/40"}`}>
+              {selected === i && <span className="w-2 h-2 rounded-full" style={{ background: meta.color }} />}
+            </span>
+            <span>{opt.label}</span>
+          </button>
+        ))}
+      </div>
+      <button onClick={confirm} disabled={selected === null}
+        className="w-full py-3 rounded-md bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 disabled:opacity-40">
+        {step < ESG_QUESTIONS.length - 1 ? "Question suivante →" : "Voir mon score ESG"}
+      </button>
     </div>
   );
 }
