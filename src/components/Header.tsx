@@ -42,6 +42,8 @@ export default function Header() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
   const isRSE = pathname.startsWith("/rse");
 
   useEffect(() => {
