@@ -4,7 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import {
   LayoutDashboard, Leaf, Users, ShieldCheck, FileBarChart, Settings,
-  Menu, X, ChevronDown, ChevronRight, LogOut, User, Sparkles,
+  Menu, X, ChevronDown, ChevronRight, LogOut, User, Sparkles, Scale,
 } from "lucide-react";
 import logo from "@/assets/logo_decarbotech.png";
 
@@ -14,6 +14,7 @@ const NAV_ITEMS = [
   { to: "/app/social",        label: "Social",        icon: Users },
   { to: "/app/gouvernance",   label: "Gouvernance",   icon: ShieldCheck },
   { to: "/app/rapports",      label: "Rapports",      icon: FileBarChart },
+  { to: "/app/conformite",    label: "Conformité",    icon: Scale },
   { to: "/app/plan-action",   label: "Plan d'Action (IA)", icon: Sparkles },
   { to: "/app/parametres",    label: "Paramètres",    icon: Settings },
 ];

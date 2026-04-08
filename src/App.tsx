@@ -16,6 +16,7 @@ import Gouvernance from "./pages/app/Gouvernance.tsx";
 import Rapports from "./pages/app/Rapports.tsx";
 import Parametres from "./pages/app/Parametres.tsx";
 import PlanAction from "./pages/app/PlanAction.tsx";
+import Conformite from "./pages/app/Conformite.tsx";
 import Onboarding from "./pages/Onboarding.tsx";
 
 const queryClient = new QueryClient();
@@ -39,6 +40,7 @@ const App = () => (
               <Route path="gouvernance" element={<Gouvernance />} />
               <Route path="rapports" element={<Rapports />} />
               <Route path="plan-action" element={<PlanAction />} />
+              <Route path="conformite" element={<Conformite />} />
               <Route path="parametres" element={<Parametres />} />
             </Route>
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

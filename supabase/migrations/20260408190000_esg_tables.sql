@@ -113,6 +113,41 @@ CREATE POLICY "action_statuses_delete_org" ON public.action_statuses
     SELECT organization_id FROM public.profiles WHERE user_id = auth.uid()
   ));
 
+-- Create compliance_statuses table for tracking norm compliance
+CREATE TABLE IF NOT EXISTS public.compliance_statuses (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  organization_id uuid NOT NULL REFERENCES public.organizations(id) ON DELETE CASCADE,
+  standard_id text NOT NULL,
+  requirement_id text NOT NULL,
+  status text NOT NULL DEFAULT 'na' CHECK (status IN ('conforme', 'partiel', 'non_conforme', 'na')),
+  comment text,
+  proof_url text,
+  updated_at timestamp with time zone DEFAULT timezone('utc', now()),
+  UNIQUE(organization_id, standard_id, requirement_id)
+);
+
+ALTER TABLE public.compliance_statuses ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "compliance_statuses_select_org" ON public.compliance_statuses
+  FOR SELECT USING (organization_id IN (
+    SELECT organization_id FROM public.profiles WHERE user_id = auth.uid()
+  ));
+
+CREATE POLICY "compliance_statuses_insert_org" ON public.compliance_statuses
+  FOR INSERT WITH CHECK (organization_id IN (
+    SELECT organization_id FROM public.profiles WHERE user_id = auth.uid()
+  ));
+
+CREATE POLICY "compliance_statuses_update_org" ON public.compliance_statuses
+  FOR UPDATE USING (organization_id IN (
+    SELECT organization_id FROM public.profiles WHERE user_id = auth.uid()
+  ));
+
+CREATE POLICY "compliance_statuses_delete_org" ON public.compliance_statuses
+  FOR DELETE USING (organization_id IN (
+    SELECT organization_id FROM public.profiles WHERE user_id = auth.uid()
+  ));
+
 CREATE POLICY "Users can view their assessments"
 ON public.assessments FOR SELECT
 USING (user_id = auth.uid());

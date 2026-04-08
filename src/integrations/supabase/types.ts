@@ -170,6 +170,39 @@ export type Database = {
         }
         Relationships: []
       }
+      compliance_statuses: {
+        Row: {
+          id: string
+          organization_id: string
+          standard_id: string
+          requirement_id: string
+          status: string
+          comment: string | null
+          proof_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          organization_id: string
+          standard_id: string
+          requirement_id: string
+          status: string
+          comment?: string | null
+          proof_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          organization_id?: string
+          standard_id?: string
+          requirement_id?: string
+          status?: string
+          comment?: string | null
+          proof_url?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
