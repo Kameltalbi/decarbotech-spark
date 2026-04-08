@@ -21,6 +21,7 @@ export type Database = {
           created_at: string
           full_name: string | null
           id: string
+          organization_id: string | null
           updated_at: string
           user_id: string
         }
@@ -30,6 +31,7 @@ export type Database = {
           created_at?: string
           full_name?: string | null
           id?: string
+          organization_id?: string | null
           updated_at?: string
           user_id: string
         }
@@ -39,8 +41,105 @@ export type Database = {
           created_at?: string
           full_name?: string | null
           id?: string
+          organization_id?: string | null
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      organizations: {
+        Row: {
+          id: string
+          name: string
+          sector: string | null
+          size: string | null
+          address: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          sector?: string | null
+          size?: string | null
+          address?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          sector?: string | null
+          size?: string | null
+          address?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      esg_data: {
+        Row: {
+          id: string
+          organization_id: string
+          pillar: string
+          category: string
+          period: string
+          data: Json
+          score: number | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          organization_id: string
+          pillar: string
+          category: string
+          period?: string
+          data?: Json
+          score?: number | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          organization_id?: string
+          pillar?: string
+          category?: string
+          period?: string
+          data?: Json
+          score?: number | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      assessments: {
+        Row: {
+          id: string
+          organization_id: string | null
+          user_id: string
+          answers: Json
+          scores: Json
+          contact: Json | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          organization_id?: string | null
+          user_id: string
+          answers?: Json
+          scores?: Json
+          contact?: Json | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          organization_id?: string | null
+          user_id?: string
+          answers?: Json
+          scores?: Json
+          contact?: Json | null
+          created_at?: string
         }
         Relationships: []
       }

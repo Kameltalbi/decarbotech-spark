@@ -1,5 +1,7 @@
 import { useState, useEffect, type ChangeEvent, type FormEvent } from "react";
-import { Send, Check, ChevronLeft } from "lucide-react";
+import { Send, Check, ChevronLeft, Loader2, Save } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 type DiagOption   = { label: string; score: number };
@@ -650,10 +652,30 @@ function ResultsScreen({ answers, contact, onRestart }: {
   answers: DiagAnswers; contact: ContactData; onRestart: () => void;
 }) {
   const [emailStatus, setEmailStatus] = useState<"idle"|"sending"|"sent"|"error">("idle");
+  const [saveStatus, setSaveStatus] = useState<"idle"|"saving"|"saved"|"error">("idle");
+  const { user } = useAuth();
   const scores     = calcScores(answers);
   const themeScores = calcThemeScores(answers);
   const grade      = getGrade(scores.global);
   const recos      = buildRecos(answers);
+
+  // Save to Supabase if user is logged in
+  useEffect(() => {
+    if (user) {
+      setSaveStatus("saving");
+      supabase
+        .from("assessments")
+        .insert({
+          user_id: user.id,
+          answers: answers,
+          scores: { e: scores.e, s: scores.s, g: scores.g, global: scores.global },
+          contact: contact,
+        })
+        .then(({ error }) => {
+          setSaveStatus(error ? "error" : "saved");
+        });
+    }
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setEmailStatus("sending");
@@ -687,6 +709,16 @@ function ResultsScreen({ answers, contact, onRestart }: {
         {emailStatus === "sent" && (
           <p className="text-xs text-emerald-600 mt-2 flex items-center justify-center gap-1">
             <Check className="w-3 h-3" /> Rapport envoyé à {contact.email}
+          </p>
+        )}
+        {saveStatus === "saving" && user && (
+          <p className="text-xs text-blue-600 mt-2 flex items-center justify-center gap-1">
+            <Loader2 className="w-3 h-3 animate-spin" /> Sauvegarde dans votre espace…
+          </p>
+        )}
+        {saveStatus === "saved" && user && (
+          <p className="text-xs text-emerald-600 mt-2 flex items-center justify-center gap-1">
+            <Save className="w-3 h-3" /> Diagnostic sauvegardé dans votre espace ESG
           </p>
         )}
       </div>

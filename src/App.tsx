@@ -8,6 +8,14 @@ import Index from "./pages/Index.tsx";
 import RSE from "./pages/RSE.tsx";
 import Auth from "./pages/Auth.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import AppLayout from "./components/AppLayout.tsx";
+import Dashboard from "./pages/app/Dashboard.tsx";
+import Environnement from "./pages/app/Environnement.tsx";
+import Social from "./pages/app/Social.tsx";
+import Gouvernance from "./pages/app/Gouvernance.tsx";
+import Rapports from "./pages/app/Rapports.tsx";
+import Parametres from "./pages/app/Parametres.tsx";
+import Onboarding from "./pages/Onboarding.tsx";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +30,15 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/rse" element={<RSE />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/onboarding" element={<Onboarding />} />
+            <Route path="/app" element={<AppLayout />}>
+              <Route index element={<Dashboard />} />
+              <Route path="environnement" element={<Environnement />} />
+              <Route path="social" element={<Social />} />
+              <Route path="gouvernance" element={<Gouvernance />} />
+              <Route path="rapports" element={<Rapports />} />
+              <Route path="parametres" element={<Parametres />} />
+            </Route>
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
