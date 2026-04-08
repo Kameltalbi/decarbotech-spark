@@ -143,6 +143,33 @@ export type Database = {
         }
         Relationships: []
       }
+      action_statuses: {
+        Row: {
+          id: string
+          organization_id: string
+          action_id: string
+          status: string
+          notes: string | null
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          organization_id: string
+          action_id: string
+          status: string
+          notes?: string | null
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          organization_id?: string
+          action_id?: string
+          status?: string
+          notes?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
