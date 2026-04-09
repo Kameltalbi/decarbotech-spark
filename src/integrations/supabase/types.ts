@@ -14,6 +14,194 @@ export type Database = {
   }
   public: {
     Tables: {
+      action_statuses: {
+        Row: {
+          action_id: string
+          id: string
+          notes: string | null
+          organization_id: string
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          action_id: string
+          id?: string
+          notes?: string | null
+          organization_id: string
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          action_id?: string
+          id?: string
+          notes?: string | null
+          organization_id?: string
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "action_statuses_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      assessments: {
+        Row: {
+          answers: Json | null
+          contact: Json | null
+          created_at: string | null
+          id: string
+          organization_id: string | null
+          scores: Json | null
+          user_id: string
+        }
+        Insert: {
+          answers?: Json | null
+          contact?: Json | null
+          created_at?: string | null
+          id?: string
+          organization_id?: string | null
+          scores?: Json | null
+          user_id: string
+        }
+        Update: {
+          answers?: Json | null
+          contact?: Json | null
+          created_at?: string | null
+          id?: string
+          organization_id?: string | null
+          scores?: Json | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assessments_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      compliance_statuses: {
+        Row: {
+          comment: string | null
+          id: string
+          organization_id: string
+          proof_url: string | null
+          requirement_id: string
+          standard_id: string
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          comment?: string | null
+          id?: string
+          organization_id: string
+          proof_url?: string | null
+          requirement_id: string
+          standard_id: string
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          comment?: string | null
+          id?: string
+          organization_id?: string
+          proof_url?: string | null
+          requirement_id?: string
+          standard_id?: string
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "compliance_statuses_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      esg_data: {
+        Row: {
+          category: string
+          created_at: string | null
+          data: Json | null
+          id: string
+          organization_id: string
+          period: string | null
+          pillar: string
+          score: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          category: string
+          created_at?: string | null
+          data?: Json | null
+          id?: string
+          organization_id: string
+          period?: string | null
+          pillar: string
+          score?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          data?: Json | null
+          id?: string
+          organization_id?: string
+          period?: string | null
+          pillar?: string
+          score?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "esg_data_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      organizations: {
+        Row: {
+          address: string | null
+          created_at: string | null
+          id: string
+          name: string
+          sector: string | null
+          size: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string | null
+          id?: string
+          name: string
+          sector?: string | null
+          size?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          address?: string | null
+          created_at?: string | null
+          id?: string
+          name?: string
+          sector?: string | null
+          size?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -45,163 +233,15 @@ export type Database = {
           updated_at?: string
           user_id?: string
         }
-        Relationships: []
-      }
-      organizations: {
-        Row: {
-          id: string
-          name: string
-          sector: string | null
-          size: string | null
-          address: string | null
-          created_at: string
-          updated_at: string
-        }
-        Insert: {
-          id?: string
-          name: string
-          sector?: string | null
-          size?: string | null
-          address?: string | null
-          created_at?: string
-          updated_at?: string
-        }
-        Update: {
-          id?: string
-          name?: string
-          sector?: string | null
-          size?: string | null
-          address?: string | null
-          created_at?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      esg_data: {
-        Row: {
-          id: string
-          organization_id: string
-          pillar: string
-          category: string
-          period: string
-          data: Json
-          score: number | null
-          created_at: string
-          updated_at: string
-        }
-        Insert: {
-          id?: string
-          organization_id: string
-          pillar: string
-          category: string
-          period?: string
-          data?: Json
-          score?: number | null
-          created_at?: string
-          updated_at?: string
-        }
-        Update: {
-          id?: string
-          organization_id?: string
-          pillar?: string
-          category?: string
-          period?: string
-          data?: Json
-          score?: number | null
-          created_at?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      assessments: {
-        Row: {
-          id: string
-          organization_id: string | null
-          user_id: string
-          answers: Json
-          scores: Json
-          contact: Json | null
-          created_at: string
-        }
-        Insert: {
-          id?: string
-          organization_id?: string | null
-          user_id: string
-          answers?: Json
-          scores?: Json
-          contact?: Json | null
-          created_at?: string
-        }
-        Update: {
-          id?: string
-          organization_id?: string | null
-          user_id?: string
-          answers?: Json
-          scores?: Json
-          contact?: Json | null
-          created_at?: string
-        }
-        Relationships: []
-      }
-      action_statuses: {
-        Row: {
-          id: string
-          organization_id: string
-          action_id: string
-          status: string
-          notes: string | null
-          updated_at: string
-        }
-        Insert: {
-          id?: string
-          organization_id: string
-          action_id: string
-          status: string
-          notes?: string | null
-          updated_at?: string
-        }
-        Update: {
-          id?: string
-          organization_id?: string
-          action_id?: string
-          status?: string
-          notes?: string | null
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      compliance_statuses: {
-        Row: {
-          id: string
-          organization_id: string
-          standard_id: string
-          requirement_id: string
-          status: string
-          comment: string | null
-          proof_url: string | null
-          updated_at: string
-        }
-        Insert: {
-          id?: string
-          organization_id: string
-          standard_id: string
-          requirement_id: string
-          status: string
-          comment?: string | null
-          proof_url?: string | null
-          updated_at?: string
-        }
-        Update: {
-          id?: string
-          organization_id?: string
-          standard_id?: string
-          requirement_id?: string
-          status?: string
-          comment?: string | null
-          proof_url?: string | null
-          updated_at?: string
-        }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
