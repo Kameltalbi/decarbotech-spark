@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import logo from "@/assets/logo_decarbotech.png";
 import logoKeyconsulting from "@/assets/logo_keyconsulting.png";
 import heroImage from "@/assets/hero_decarbonation.jpg";
+import EcosystemSection from "@/components/EcosystemSection";
 
 const NAV_LINKS = [
   { label: "Fonctionnalités", href: "#features" },
@@ -456,6 +457,9 @@ export default function Index() {
           </div>
         </div>
       </section>
+
+      {/* ECOSYSTEM */}
+      <EcosystemSection />
 
       {/* STANDARDS CALLOUT */}
       <section id="normes" className="py-16 sm:py-20 px-5 sm:px-8 bg-primary">
