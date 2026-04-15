@@ -1,0 +1,1 @@
+ALTER TABLE public.organizations ENABLE ROW LEVEL SECURITY;
